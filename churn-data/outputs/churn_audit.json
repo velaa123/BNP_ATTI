@@ -1,0 +1,40 @@
+{
+  "total_input_rows": 2000,
+  "ranked_rows": 1204,
+  "excluded_rows": 796,
+  "active_customers": 1204,
+  "data_quality": {
+    "missing_signup_dates": 0,
+    "invalid_signup_dates": 0,
+    "missing_purchase_dates": 0,
+    "invalid_purchase_dates": 0,
+    "purchase_before_signup": 63,
+    "future_purchase_dates": 0,
+    "missing_purchase_frequency": 0,
+    "negative_purchase_frequency": 0,
+    "missing_rating": 0
+  },
+  "risk_segment_distribution": {
+    "Medium": 627,
+    "Low": 389,
+    "High": 188
+  },
+  "risk_score_statistics": {
+    "minimum": 2.9,
+    "maximum": 94.8,
+    "mean": 50.0,
+    "median": 50.5
+  },
+  "methodology": {
+    "purpose": "Prioritize active customers for outreach using an explainable risk indicator.",
+    "not_a_future_churn_probability": true,
+    "score_formula": "100 * (0.55 * recency_percentile + 0.25 * inverse_purchase_frequency_percentile + 0.20 * inverse_rating_percentile)",
+    "thresholds": {
+      "high": ">= 70",
+      "medium": ">= 40 and < 70",
+      "low": "< 40"
+    },
+    "scoreable_population": "active customers"
+  },
+  "as_of": "2025-12-08"
+}

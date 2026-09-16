@@ -1,0 +1,41 @@
+======================================================================
+CUSTOMER CHURN PROJECT - MODEL EVALUATION REPORT
+======================================================================
+
+MODEL CONFIGURATION
+----------------------------------------------------------------------
+Prediction threshold       : 0.52
+Customers evaluated        : 2000
+Cross-validation ROC-AUC   : 0.8511
+
+TARGET DEFINITION
+----------------------------------------------------------------------
+Customers at or above the 75th percentile of recency_days are labeled as churned.
+
+TEST / FULL DATASET METRICS
+----------------------------------------------------------------------
+Accuracy                   : 0.7595 (75.95%)
+Precision                  : 0.5114 (51.14%)
+Recall                     : 0.8500 (85.00%)
+F1 Score                   : 0.6386 (63.86%)
+ROC-AUC                    : 0.8866 (88.66%)
+
+CONFUSION MATRIX
+----------------------------------------------------------------------
+                 Predicted  Predicted
+                 Active     Churned
+Actual Active    1094       406
+Actual Churned   75         425
+
+INTERPRETATION
+----------------------------------------------------------------------
+Accuracy  : Overall percentage of correct predictions.
+Precision : Of customers predicted as churned, percentage actually labeled churned.
+Recall    : Of customers labeled churned, percentage correctly identified.
+F1 Score  : Balance between precision and recall.
+ROC-AUC   : Ability of the model to rank churned customers above active customers.
+
+IMPORTANT:
+The churn target in this project is a behavioral proxy based on the recency distribution, not an observed historical churn event.
+
+======================================================================

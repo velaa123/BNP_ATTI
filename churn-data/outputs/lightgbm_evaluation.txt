@@ -1,0 +1,76 @@
+LIGHTGBM CUSTOMER CHURN MODEL EVALUATION
+======================================================================
+Dataset rows: 2000
+Features: 21
+Training rows: 1600
+Testing rows: 400
+
+Target Distribution
+Active: 1500 (75.00%)
+Churned: 500 (25.00%)
+
+Best Hyperparameters
+subsample: 0.7
+reg_lambda: 0.0
+reg_alpha: 0.0
+num_leaves: 47
+n_estimators: 700
+min_child_samples: 15
+max_depth: 2
+learning_rate: 0.005
+colsample_bytree: 0.7
+
+Best CV ROC-AUC: 0.8513
+Prediction Threshold: 0.29
+
+Out-of-Fold Training Performance
+Accuracy: 0.7531
+Precision: 0.5037
+Recall: 0.8425
+F1: 0.6305
+
+HELD-OUT TEST PERFORMANCE
+Accuracy: 0.7075
+Precision: 0.4491
+Recall: 0.7500
+F1: 0.5618
+ROC-AUC: 0.8313
+
+Confusion Matrix
+[[208  92]
+ [ 25  75]]
+
+Classification Report
+              precision    recall  f1-score   support
+
+      Active       0.89      0.69      0.78       300
+     Churned       0.45      0.75      0.56       100
+
+    accuracy                           0.71       400
+   macro avg       0.67      0.72      0.67       400
+weighted avg       0.78      0.71      0.73       400
+
+Training Accuracy: 0.7519
+Testing Accuracy: 0.7075
+Accuracy Gap: 0.0444
+
+Target Definition
+Customers at or above the 75th percentile of recency_days are labeled as churned.
+recency_days is excluded from model features to avoid direct target leakage.
+
+Top Feature Importances
+orders_per_month: 823
+tenure_days: 617
+purchase_activity_ratio: 243
+average_unit_price: 115
+age: 75
+total_revenue: 69
+revenue_per_unit: 43
+total_quantity: 30
+average_purchase_frequency: 20
+average_order_value: 19
+average_rating: 17
+customer_value: 10
+revenue_per_order: 9
+average_quantity_per_order: 8
+total_cancellations: 1

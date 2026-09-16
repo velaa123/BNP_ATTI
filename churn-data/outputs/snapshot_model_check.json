@@ -1,0 +1,11 @@
+{
+  "task": "exploratory classification of current active versus cancelled status",
+  "not_a_future_churn_prediction": true,
+  "rows": 1642,
+  "test_rows": 411,
+  "test_cancelled_prevalence": 0.287,
+  "test_roc_auc": 0.512,
+  "test_average_precision": 0.288,
+  "reference_date": "2025-12-08",
+  "note": "Random snapshot holdout is not a future-period test; this classifier is not used for outreach ranking."
+}

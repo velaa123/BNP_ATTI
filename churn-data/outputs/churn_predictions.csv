@@ -1,0 +1,1205 @@
+customer_id,risk_score,risk_segment,reason,days_since_purchase
+CUST1597,94.76,High,Long time since last purchase,1775
+CUST1847,93.95,High,Low purchase frequency,1490
+CUST2934,93.42,High,Low purchase frequency,1387
+CUST2890,92.96,High,Long time since last purchase,1705
+CUST2125,91.56,High,Long time since last purchase,1884
+CUST2862,91.16,High,Long time since last purchase,1748
+CUST2799,90.64,High,Low customer rating,1489
+CUST1179,90.36,High,Low customer rating,1642
+CUST1045,89.87,High,Low customer rating,1296
+CUST2680,89.7,High,Low purchase frequency,1191
+CUST2408,89.38,High,Long time since last purchase,1695
+CUST1577,89.07,High,Long time since last purchase,1766
+CUST2923,88.55,High,Long time since last purchase,1471
+CUST2459,87.6,High,Low customer rating,1686
+CUST1870,87.53,High,Low customer rating,1192
+CUST1236,86.52,High,Low customer rating,1241
+CUST2772,86.31,High,Low purchase frequency,1422
+CUST1329,86.08,High,Long time since last purchase,1299
+CUST2744,85.94,High,Long time since last purchase,1421
+CUST1346,85.9,High,Long time since last purchase,1306
+CUST2113,85.62,High,Long time since last purchase,1592
+CUST2032,85.43,High,Long time since last purchase,1606
+CUST2346,85.32,High,Low customer rating,1237
+CUST1462,85.25,High,Long time since last purchase,1750
+CUST1639,85.23,High,Long time since last purchase,1530
+CUST2518,85.03,High,Long time since last purchase,1228
+CUST2969,84.89,High,Long time since last purchase,1786
+CUST2232,84.84,High,Long time since last purchase,1812
+CUST1519,84.53,High,Long time since last purchase,1296
+CUST1082,84.49,High,Low customer rating,1387
+CUST2863,84.45,High,Low customer rating,1063
+CUST2849,84.42,High,Low purchase frequency,1186
+CUST1697,83.63,High,Long time since last purchase,1491
+CUST1959,83.3,High,Low purchase frequency,1219
+CUST1410,83.25,High,Low purchase frequency,1428
+CUST2117,83.17,High,Low customer rating,1294
+CUST2024,82.87,High,Low purchase frequency,1182
+CUST2726,82.76,High,Long time since last purchase,1653
+CUST1099,82.55,High,Low purchase frequency,1333
+CUST2466,82.53,High,Long time since last purchase,1762
+CUST1486,82.52,High,Low purchase frequency,1166
+CUST1274,82.45,High,Low purchase frequency,1389
+CUST2820,82.42,High,Long time since last purchase,1499
+CUST2316,82.21,High,Long time since last purchase,1239
+CUST2580,81.94,High,Long time since last purchase,1657
+CUST2993,81.92,High,Long time since last purchase,1552
+CUST1341,81.75,High,Long time since last purchase,1288
+CUST1977,81.62,High,Long time since last purchase,1367
+CUST1566,81.18,High,Low purchase frequency,1272
+CUST2371,80.96,High,Long time since last purchase,1585
+CUST2935,80.81,High,Low purchase frequency,918
+CUST1746,80.6,High,Low customer rating,1246
+CUST2516,80.49,High,Long time since last purchase,1319
+CUST1498,80.38,High,Long time since last purchase,1284
+CUST2543,80.16,High,Long time since last purchase,1592
+CUST1773,79.86,High,Low customer rating,1048
+CUST1523,79.77,High,Long time since last purchase,1366
+CUST2879,79.75,High,Long time since last purchase,1359
+CUST1759,79.74,High,Long time since last purchase,1273
+CUST1238,79.61,High,Low purchase frequency,1047
+CUST2598,79.55,High,Low customer rating,1213
+CUST1096,79.54,High,Long time since last purchase,1511
+CUST2902,79.51,High,Long time since last purchase,1323
+CUST1582,79.45,High,Long time since last purchase,1485
+CUST1742,79.42,High,Low purchase frequency,1075
+CUST2305,79.37,High,Long time since last purchase,1221
+CUST2817,79.27,High,Low purchase frequency,1385
+CUST1506,79.23,High,Low customer rating,1281
+CUST2842,79.04,High,Long time since last purchase,1385
+CUST2391,78.89,High,Long time since last purchase,1658
+CUST2168,78.8,High,Low purchase frequency,1103
+CUST1781,78.66,High,Long time since last purchase,1323
+CUST2319,78.65,High,Low customer rating,1198
+CUST1160,78.47,High,Long time since last purchase,1396
+CUST2824,78.45,High,Low purchase frequency,1063
+CUST2273,78.34,High,Long time since last purchase,1593
+CUST1362,78.27,High,Long time since last purchase,1506
+CUST1387,78.27,High,Long time since last purchase,1303
+CUST1758,78.02,High,Long time since last purchase,1712
+CUST1482,77.98,High,Low customer rating,1007
+CUST1403,77.46,High,Long time since last purchase,1093
+CUST2808,77.33,High,Low purchase frequency,1061
+CUST1345,77.1,High,Long time since last purchase,1183
+CUST2818,77.08,High,Long time since last purchase,1435
+CUST2745,77.04,High,Low customer rating,1046
+CUST2609,76.9,High,Long time since last purchase,1199
+CUST1679,76.85,High,Long time since last purchase,1543
+CUST2845,76.85,High,Low customer rating,959
+CUST1806,76.82,High,Low purchase frequency,1139
+CUST2569,76.78,High,Long time since last purchase,1124
+CUST2875,76.75,High,Long time since last purchase,1914
+CUST2688,76.74,High,Long time since last purchase,1522
+CUST2089,76.71,High,Low customer rating,1643
+CUST2198,76.4,High,Low purchase frequency,964
+CUST1158,76.21,High,Long time since last purchase,1516
+CUST1389,76.14,High,Long time since last purchase,1713
+CUST2321,75.95,High,Long time since last purchase,1350
+CUST2409,75.91,High,Long time since last purchase,1545
+CUST2474,75.77,High,Long time since last purchase,1247
+CUST2086,75.74,High,Long time since last purchase,1363
+CUST2854,75.47,High,Low customer rating,1152
+CUST2789,75.43,High,Long time since last purchase,1654
+CUST1587,75.39,High,Long time since last purchase,1215
+CUST1136,75.35,High,Long time since last purchase,1219
+CUST2965,75.21,High,Low purchase frequency,973
+CUST1990,75.19,High,Long time since last purchase,1136
+CUST2937,75.05,High,Low customer rating,829
+CUST2422,75.01,High,Long time since last purchase,1311
+CUST1549,74.98,High,Long time since last purchase,1332
+CUST1859,74.96,High,Long time since last purchase,1330
+CUST1712,74.94,High,Low customer rating,1048
+CUST2259,74.87,High,Long time since last purchase,1717
+CUST2441,74.57,High,Long time since last purchase,1701
+CUST1546,74.57,High,Low customer rating,1078
+CUST1097,74.54,High,Low customer rating,1113
+CUST1727,74.47,High,Long time since last purchase,1112
+CUST1745,74.38,High,Low purchase frequency,909
+CUST1718,74.32,High,Long time since last purchase,1422
+CUST2211,74.31,High,Low customer rating,1143
+CUST2265,74.3,High,Low customer rating,1157
+CUST1294,74.25,High,Long time since last purchase,1582
+CUST1653,74.14,High,Long time since last purchase,1455
+CUST1243,74.11,High,Low purchase frequency,1097
+CUST2304,74.05,High,Long time since last purchase,1385
+CUST2547,73.76,High,Long time since last purchase,1665
+CUST2366,73.76,High,Long time since last purchase,1168
+CUST1001,73.73,High,Long time since last purchase,1579
+CUST2162,73.7,High,Long time since last purchase,1698
+CUST1063,73.63,High,Long time since last purchase,1162
+CUST2392,73.58,High,Long time since last purchase,1737
+CUST2335,73.58,High,Low purchase frequency,947
+CUST2066,73.5,High,Long time since last purchase,1428
+CUST2173,73.47,High,Long time since last purchase,1747
+CUST1072,73.44,High,Long time since last purchase,1799
+CUST1813,73.44,High,Low customer rating,1027
+CUST2604,73.36,High,Low customer rating,996
+CUST2749,72.93,High,Long time since last purchase,1130
+CUST2499,72.92,High,Low customer rating,1036
+CUST2286,72.88,High,Low customer rating,1141
+CUST2456,72.87,High,Low customer rating,1427
+CUST1133,72.87,High,Long time since last purchase,1337
+CUST2572,72.81,High,Low purchase frequency,1277
+CUST2557,72.71,High,Low purchase frequency,1109
+CUST1988,72.62,High,Low purchase frequency,861
+CUST1327,72.45,High,Long time since last purchase,1239
+CUST2241,72.42,High,Long time since last purchase,1428
+CUST2195,72.37,High,Low purchase frequency,1035
+CUST2974,72.32,High,Long time since last purchase,1067
+CUST2165,72.22,High,Long time since last purchase,1327
+CUST1983,72.21,High,Long time since last purchase,1303
+CUST1293,72.14,High,Low purchase frequency,1057
+CUST2405,72.0,High,Low purchase frequency,1024
+CUST1994,71.94,High,Long time since last purchase,1722
+CUST1948,71.88,High,Long time since last purchase,1616
+CUST1253,71.86,High,Long time since last purchase,1494
+CUST2869,71.86,High,Low customer rating,938
+CUST2521,71.85,High,Low customer rating,786
+CUST2802,71.81,High,Low customer rating,1455
+CUST1193,71.78,High,Low customer rating,1036
+CUST2006,71.73,High,Low purchase frequency,944
+CUST1840,71.66,High,Long time since last purchase,1441
+CUST2404,71.65,High,Low customer rating,926
+CUST2751,71.61,High,Low purchase frequency,1093
+CUST2661,71.51,High,Low customer rating,880
+CUST1090,71.45,High,Low customer rating,853
+CUST2009,71.33,High,Long time since last purchase,1470
+CUST2652,71.25,High,Long time since last purchase,1429
+CUST2494,71.19,High,Low purchase frequency,1180
+CUST1556,71.17,High,Long time since last purchase,1395
+CUST1573,71.11,High,Long time since last purchase,972
+CUST2997,71.0,High,Low customer rating,1211
+CUST1774,70.99,High,Long time since last purchase,1585
+CUST2562,70.96,High,Low purchase frequency,826
+CUST2741,70.95,High,Long time since last purchase,1878
+CUST1441,70.83,High,Long time since last purchase,1027
+CUST1317,70.83,High,Low purchase frequency,814
+CUST2895,70.77,High,Long time since last purchase,1132
+CUST1534,70.76,High,Low purchase frequency,755
+CUST2649,70.7,High,Long time since last purchase,1536
+CUST1777,70.49,High,Low customer rating,903
+CUST1275,70.46,High,Low customer rating,1327
+CUST2787,70.46,High,Low purchase frequency,786
+CUST1929,70.42,High,Long time since last purchase,1433
+CUST1228,70.4,High,Long time since last purchase,1023
+CUST2447,70.27,High,Low purchase frequency,1092
+CUST2260,70.1,High,Low purchase frequency,760
+CUST2783,70.05,High,Long time since last purchase,1037
+CUST1531,70.02,High,Long time since last purchase,1234
+CUST1308,69.88,Medium,Long time since last purchase,1455
+CUST2851,69.88,Medium,Long time since last purchase,1361
+CUST1634,69.86,Medium,Long time since last purchase,1195
+CUST2145,69.8,Medium,Long time since last purchase,1684
+CUST2084,69.66,Medium,Low purchase frequency,968
+CUST2608,69.65,Medium,Long time since last purchase,1039
+CUST1919,69.53,Medium,Long time since last purchase,1451
+CUST2234,69.42,Medium,Long time since last purchase,1602
+CUST1738,69.41,Medium,Low purchase frequency,792
+CUST2815,69.25,Medium,Low customer rating,960
+CUST2126,69.24,Medium,Long time since last purchase,1181
+CUST1923,69.1,Medium,Long time since last purchase,1404
+CUST1495,69.05,Medium,Long time since last purchase,1487
+CUST1710,68.98,Medium,Long time since last purchase,1359
+CUST2994,68.81,Medium,Low customer rating,662
+CUST2620,68.76,Medium,Long time since last purchase,1309
+CUST1030,68.75,Medium,Long time since last purchase,1797
+CUST2434,68.75,Medium,Low purchase frequency,813
+CUST2681,68.73,Medium,Long time since last purchase,1627
+CUST1515,68.63,Medium,Low customer rating,736
+CUST1396,68.59,Medium,Long time since last purchase,1475
+CUST1524,68.54,Medium,Long time since last purchase,1219
+CUST2243,68.54,Medium,Low customer rating,703
+CUST2469,68.44,Medium,Low purchase frequency,924
+CUST2245,68.34,Medium,Low purchase frequency,814
+CUST2809,68.33,Medium,Low customer rating,1210
+CUST1551,68.22,Medium,Low purchase frequency,836
+CUST1788,68.18,Medium,Low purchase frequency,1045
+CUST2975,68.14,Medium,Long time since last purchase,1186
+CUST1685,68.14,Medium,Low purchase frequency,1048
+CUST1984,68.12,Medium,Low purchase frequency,1159
+CUST2729,68.05,Medium,Low customer rating,889
+CUST1283,68.02,Medium,Long time since last purchase,1507
+CUST2475,68.01,Medium,Long time since last purchase,1104
+CUST1611,67.9,Medium,Long time since last purchase,1444
+CUST1433,67.89,Medium,Long time since last purchase,1367
+CUST1217,67.78,Medium,Low purchase frequency,971
+CUST1357,67.67,Medium,Low customer rating,1027
+CUST2203,67.57,Medium,Low purchase frequency,851
+CUST2468,67.56,Medium,Low purchase frequency,808
+CUST2671,67.55,Medium,Long time since last purchase,1419
+CUST1365,67.45,Medium,Long time since last purchase,1150
+CUST2327,67.37,Medium,Low customer rating,937
+CUST2552,67.29,Medium,Long time since last purchase,1458
+CUST2129,67.22,Medium,Long time since last purchase,1365
+CUST1881,67.08,Medium,Long time since last purchase,1012
+CUST1092,67.04,Medium,Long time since last purchase,1296
+CUST1606,67.03,Medium,Long time since last purchase,968
+CUST2424,67.0,Medium,Low purchase frequency,779
+CUST2881,66.89,Medium,Low customer rating,852
+CUST1536,66.8,Medium,Long time since last purchase,1028
+CUST2531,66.79,Medium,Low purchase frequency,803
+CUST2731,66.78,Medium,Low customer rating,1012
+CUST1132,66.77,Medium,Low purchase frequency,733
+CUST2903,66.7,Medium,Long time since last purchase,1143
+CUST2208,66.68,Medium,Long time since last purchase,1106
+CUST1552,66.64,Medium,Long time since last purchase,1088
+CUST1342,66.59,Medium,Long time since last purchase,1391
+CUST2743,66.58,Medium,Long time since last purchase,1411
+CUST1835,66.55,Medium,Low purchase frequency,1019
+CUST1518,66.47,Medium,Long time since last purchase,1209
+CUST2618,66.45,Medium,Low purchase frequency,640
+CUST1780,66.42,Medium,Low customer rating,765
+CUST2183,66.37,Medium,Low customer rating,778
+CUST1225,66.36,Medium,Low customer rating,668
+CUST1138,66.2,Medium,Low customer rating,825
+CUST1692,66.19,Medium,Long time since last purchase,984
+CUST2010,66.18,Medium,Low purchase frequency,844
+CUST1643,66.17,Medium,Low purchase frequency,791
+CUST1987,66.09,Medium,Long time since last purchase,959
+CUST2848,66.09,Medium,Low customer rating,873
+CUST1667,65.95,Medium,Low customer rating,898
+CUST2342,65.88,Medium,Long time since last purchase,1108
+CUST2786,65.84,Medium,Low customer rating,850
+CUST1499,65.8,Medium,Long time since last purchase,1201
+CUST2461,65.75,Medium,Long time since last purchase,963
+CUST1902,65.74,Medium,Low purchase frequency,754
+CUST1619,65.71,Medium,Long time since last purchase,1564
+CUST2202,65.71,Medium,Long time since last purchase,1453
+CUST2292,65.63,Medium,Low customer rating,1025
+CUST2256,65.56,Medium,Long time since last purchase,1367
+CUST1465,65.37,Medium,Long time since last purchase,1255
+CUST2200,65.34,Medium,Long time since last purchase,972
+CUST1570,65.27,Medium,Low customer rating,911
+CUST1215,65.24,Medium,Low customer rating,934
+CUST1115,65.22,Medium,Long time since last purchase,1428
+CUST1091,65.2,Medium,Low purchase frequency,896
+CUST2100,65.12,Medium,Low customer rating,1165
+CUST1121,65.0,Medium,Low purchase frequency,590
+CUST1974,64.93,Medium,Long time since last purchase,1050
+CUST1993,64.93,Medium,Low purchase frequency,748
+CUST2857,64.78,Medium,Low purchase frequency,790
+CUST1947,64.71,Medium,Long time since last purchase,1265
+CUST2838,64.69,Medium,Long time since last purchase,1402
+CUST2487,64.64,Medium,Long time since last purchase,932
+CUST1161,64.56,Medium,Long time since last purchase,1213
+CUST2901,64.54,Medium,Long time since last purchase,1385
+CUST1559,64.49,Medium,Long time since last purchase,1591
+CUST1110,64.48,Medium,Low purchase frequency,840
+CUST2784,64.29,Medium,Long time since last purchase,1507
+CUST1762,64.14,Medium,Long time since last purchase,1062
+CUST1202,64.13,Medium,Long time since last purchase,1077
+CUST1749,64.12,Medium,Low purchase frequency,763
+CUST2558,64.1,Medium,Low purchase frequency,815
+CUST2505,63.99,Medium,Long time since last purchase,1397
+CUST1459,63.89,Medium,Long time since last purchase,1205
+CUST1722,63.88,Medium,Low purchase frequency,582
+CUST1081,63.84,Medium,Low purchase frequency,721
+CUST1769,63.81,Medium,Long time since last purchase,1301
+CUST1938,63.8,Medium,Long time since last purchase,1318
+CUST2868,63.77,Medium,Low customer rating,1073
+CUST2814,63.75,Medium,Long time since last purchase,1546
+CUST1721,63.75,Medium,Long time since last purchase,1303
+CUST2110,63.73,Medium,Low customer rating,1079
+CUST1997,63.72,Medium,Low customer rating,785
+CUST1393,63.71,Medium,Long time since last purchase,1694
+CUST1681,63.7,Medium,Low customer rating,691
+CUST2094,63.51,Medium,Long time since last purchase,1108
+CUST2858,63.49,Medium,Low purchase frequency,832
+CUST2384,63.37,Medium,Low purchase frequency,699
+CUST2179,63.35,Medium,Low purchase frequency,871
+CUST2737,63.34,Medium,Long time since last purchase,1148
+CUST1216,63.24,Medium,Long time since last purchase,1080
+CUST1869,63.23,Medium,Low purchase frequency,863
+CUST1080,63.21,Medium,Low purchase frequency,790
+CUST2492,63.12,Medium,Low customer rating,949
+CUST2479,63.1,Medium,Long time since last purchase,1725
+CUST1885,63.07,Medium,Long time since last purchase,1295
+CUST1815,63.05,Medium,Long time since last purchase,1085
+CUST2090,63.01,Medium,Long time since last purchase,1020
+CUST2175,63.0,Medium,Long time since last purchase,1430
+CUST1865,62.97,Medium,Low purchase frequency,740
+CUST1656,62.91,Medium,Low customer rating,928
+CUST1670,62.84,Medium,Low purchase frequency,762
+CUST1540,62.83,Medium,Long time since last purchase,1242
+CUST2666,62.74,Medium,Low purchase frequency,652
+CUST2568,62.64,Medium,Low purchase frequency,866
+CUST2169,62.57,Medium,Low customer rating,734
+CUST1772,62.45,Medium,Low customer rating,683
+CUST1485,62.42,Medium,Long time since last purchase,932
+CUST2324,62.4,Medium,Low purchase frequency,841
+CUST2917,62.39,Medium,Long time since last purchase,1114
+CUST2510,62.34,Medium,Low customer rating,914
+CUST2836,62.32,Medium,Long time since last purchase,1058
+CUST2659,62.27,Medium,Long time since last purchase,1056
+CUST1496,62.25,Medium,Low customer rating,768
+CUST2502,62.24,Medium,Long time since last purchase,1101
+CUST1755,62.15,Medium,Long time since last purchase,988
+CUST1047,62.11,Medium,Long time since last purchase,1188
+CUST1610,62.06,Medium,Long time since last purchase,1190
+CUST2642,62.06,Medium,Low purchase frequency,916
+CUST2627,62.06,Medium,Low customer rating,886
+CUST2813,62.05,Medium,Long time since last purchase,1036
+CUST2513,62.05,Medium,Long time since last purchase,972
+CUST1207,61.96,Medium,Low customer rating,1002
+CUST1625,61.82,Medium,Long time since last purchase,1651
+CUST2205,61.77,Medium,Low customer rating,674
+CUST2995,61.76,Medium,Low customer rating,870
+CUST1804,61.69,Medium,Long time since last purchase,940
+CUST2918,61.66,Medium,Low customer rating,752
+CUST2398,61.64,Medium,Long time since last purchase,1307
+CUST1024,61.64,Medium,Long time since last purchase,1044
+CUST1978,61.61,Medium,Low customer rating,812
+CUST2189,61.58,Medium,Low purchase frequency,637
+CUST1304,61.52,Medium,Low purchase frequency,855
+CUST1058,61.5,Medium,Long time since last purchase,935
+CUST2155,61.5,Medium,Low customer rating,899
+CUST1051,61.46,Medium,Low purchase frequency,879
+CUST2628,61.42,Medium,Long time since last purchase,1430
+CUST2299,61.38,Medium,Long time since last purchase,1059
+CUST2856,61.38,Medium,Low customer rating,699
+CUST1621,61.36,Medium,Low purchase frequency,862
+CUST1240,61.35,Medium,Low customer rating,826
+CUST2537,61.35,Medium,Low customer rating,708
+CUST1811,61.3,Medium,Long time since last purchase,979
+CUST1857,61.3,Medium,Low customer rating,856
+CUST2087,61.3,Medium,Low customer rating,848
+CUST1831,61.3,Medium,Low purchase frequency,717
+CUST1578,61.27,Medium,Low purchase frequency,848
+CUST2800,61.24,Medium,Long time since last purchase,1343
+CUST1183,61.24,Medium,Long time since last purchase,1151
+CUST1347,61.15,Medium,Low purchase frequency,676
+CUST2078,61.08,Medium,Long time since last purchase,1104
+CUST1926,61.07,Medium,Long time since last purchase,990
+CUST1280,61.04,Medium,Low purchase frequency,947
+CUST1733,61.01,Medium,Long time since last purchase,959
+CUST1033,60.96,Medium,Long time since last purchase,1170
+CUST2250,60.8,Medium,Low purchase frequency,946
+CUST1208,60.76,Medium,Low customer rating,844
+CUST2221,60.75,Medium,Long time since last purchase,955
+CUST2714,60.74,Medium,Long time since last purchase,994
+CUST1369,60.74,Medium,Long time since last purchase,965
+CUST1404,60.72,Medium,Low purchase frequency,811
+CUST2172,60.69,Medium,Long time since last purchase,1177
+CUST2565,60.67,Medium,Low customer rating,826
+CUST1564,60.64,Medium,Low purchase frequency,583
+CUST2846,60.53,Medium,Low customer rating,639
+CUST1140,60.52,Medium,Low purchase frequency,652
+CUST1010,60.51,Medium,Long time since last purchase,1399
+CUST1467,60.46,Medium,Long time since last purchase,1455
+CUST1470,60.45,Medium,Long time since last purchase,987
+CUST2140,60.39,Medium,Long time since last purchase,1118
+CUST2489,60.33,Medium,Long time since last purchase,1403
+CUST1151,60.26,Medium,Long time since last purchase,1433
+CUST2957,60.22,Medium,Long time since last purchase,995
+CUST1706,60.22,Medium,Low customer rating,897
+CUST1241,60.17,Medium,Long time since last purchase,1415
+CUST2753,60.09,Medium,Low purchase frequency,683
+CUST2329,59.96,Medium,Long time since last purchase,1037
+CUST1245,59.95,Medium,Long time since last purchase,1599
+CUST2035,59.95,Medium,Long time since last purchase,1054
+CUST1226,59.94,Medium,Long time since last purchase,1095
+CUST1737,59.94,Medium,Low purchase frequency,807
+CUST2001,59.92,Medium,Long time since last purchase,943
+CUST2309,59.79,Medium,Low customer rating,457
+CUST2302,59.77,Medium,Long time since last purchase,1115
+CUST1763,59.74,Medium,Low purchase frequency,796
+CUST1682,59.73,Medium,Long time since last purchase,1148
+CUST2748,59.63,Medium,Long time since last purchase,842
+CUST1210,59.57,Medium,Long time since last purchase,1028
+CUST2756,59.57,Medium,Long time since last purchase,884
+CUST2350,59.57,Medium,Low purchase frequency,492
+CUST1139,59.34,Medium,Low purchase frequency,873
+CUST2045,59.32,Medium,Low customer rating,749
+CUST1797,59.28,Medium,Long time since last purchase,1186
+CUST1658,59.28,Medium,Long time since last purchase,845
+CUST1514,59.26,Medium,Low customer rating,860
+CUST1890,59.23,Medium,Long time since last purchase,1088
+CUST1366,59.2,Medium,Low purchase frequency,780
+CUST1875,59.15,Medium,Low purchase frequency,828
+CUST1917,59.11,Medium,Long time since last purchase,1140
+CUST2333,59.11,Medium,Long time since last purchase,1092
+CUST1636,59.07,Medium,Long time since last purchase,873
+CUST1085,59.07,Medium,Low purchase frequency,742
+CUST1035,59.02,Medium,Low customer rating,746
+CUST2811,58.96,Medium,Low customer rating,612
+CUST2277,58.93,Medium,Low customer rating,651
+CUST1169,58.88,Medium,Long time since last purchase,1137
+CUST2951,58.88,Medium,Low customer rating,457
+CUST1608,58.83,Medium,Low purchase frequency,691
+CUST1288,58.75,Medium,Low customer rating,522
+CUST1661,58.73,Medium,Long time since last purchase,1220
+CUST1116,58.72,Medium,Low purchase frequency,436
+CUST2122,58.58,Medium,Low purchase frequency,742
+CUST1868,58.54,Medium,Low purchase frequency,802
+CUST2805,58.52,Medium,Low purchase frequency,679
+CUST1631,58.47,Medium,Low purchase frequency,527
+CUST1998,58.4,Medium,Long time since last purchase,1037
+CUST1022,58.34,Medium,Long time since last purchase,1310
+CUST1448,58.34,Medium,Low purchase frequency,545
+CUST2133,58.27,Medium,Low purchase frequency,563
+CUST1233,58.14,Medium,Low customer rating,671
+CUST1159,58.14,Medium,Low purchase frequency,456
+CUST1330,58.11,Medium,Low purchase frequency,857
+CUST2437,58.09,Medium,Low purchase frequency,814
+CUST1473,58.06,Medium,Long time since last purchase,1036
+CUST1888,57.94,Medium,Long time since last purchase,1202
+CUST1071,57.9,Medium,Low purchase frequency,705
+CUST2044,57.83,Medium,Low purchase frequency,640
+CUST2941,57.76,Medium,Low purchase frequency,752
+CUST1209,57.74,Medium,Low customer rating,450
+CUST1612,57.65,Medium,Long time since last purchase,1003
+CUST2622,57.57,Medium,Low customer rating,680
+CUST1196,57.49,Medium,Long time since last purchase,1085
+CUST2946,57.47,Medium,Low purchase frequency,748
+CUST1260,57.44,Medium,Low purchase frequency,914
+CUST2270,57.44,Medium,Low customer rating,851
+CUST2224,57.43,Medium,Low purchase frequency,882
+CUST1952,57.35,Medium,Low purchase frequency,847
+CUST2579,57.33,Medium,Long time since last purchase,975
+CUST2269,57.29,Medium,Low customer rating,691
+CUST2476,57.19,Medium,Low purchase frequency,521
+CUST1300,57.14,Medium,Low customer rating,666
+CUST1976,57.06,Medium,Low purchase frequency,881
+CUST2897,57.05,Medium,Low customer rating,789
+CUST1716,56.99,Medium,Low customer rating,511
+CUST1443,56.94,Medium,Long time since last purchase,844
+CUST2022,56.89,Medium,Low customer rating,883
+CUST1107,56.88,Medium,Long time since last purchase,1223
+CUST2832,56.78,Medium,Long time since last purchase,990
+CUST2984,56.78,Medium,Low customer rating,644
+CUST2589,56.77,Medium,Low customer rating,523
+CUST1856,56.68,Medium,Long time since last purchase,1066
+CUST1580,56.67,Medium,Long time since last purchase,966
+CUST1305,56.64,Medium,Long time since last purchase,1135
+CUST2465,56.59,Medium,Long time since last purchase,873
+CUST2736,56.46,Medium,Low customer rating,884
+CUST1175,56.4,Medium,Low customer rating,658
+CUST1771,56.31,Medium,Long time since last purchase,973
+CUST2892,56.24,Medium,Long time since last purchase,765
+CUST1114,56.22,Medium,Low purchase frequency,926
+CUST2426,56.21,Medium,Low customer rating,561
+CUST2095,56.2,Medium,Long time since last purchase,874
+CUST1484,56.18,Medium,Low purchase frequency,621
+CUST1394,56.02,Medium,Long time since last purchase,1290
+CUST1457,56.0,Medium,Low purchase frequency,428
+CUST2115,55.98,Medium,Long time since last purchase,833
+CUST1358,55.86,Medium,Long time since last purchase,1028
+CUST1791,55.84,Medium,Low purchase frequency,757
+CUST2948,55.76,Medium,Low customer rating,437
+CUST2676,55.75,Medium,Low customer rating,653
+CUST1372,55.67,Medium,Low purchase frequency,665
+CUST1936,55.58,Medium,Long time since last purchase,814
+CUST2485,55.55,Medium,Long time since last purchase,976
+CUST1995,55.52,Medium,Long time since last purchase,887
+CUST2790,55.49,Medium,Low purchase frequency,734
+CUST1900,55.43,Medium,Low purchase frequency,494
+CUST1447,55.37,Medium,Long time since last purchase,1136
+CUST1989,55.37,Medium,Low purchase frequency,520
+CUST2821,55.36,Medium,Low purchase frequency,590
+CUST2111,55.34,Medium,Low purchase frequency,827
+CUST2213,55.01,Medium,Low customer rating,688
+CUST1244,55.01,Medium,Low customer rating,620
+CUST2905,54.91,Medium,Long time since last purchase,1047
+CUST1272,54.87,Medium,Long time since last purchase,987
+CUST2532,54.86,Medium,Low purchase frequency,427
+CUST1961,54.83,Medium,Long time since last purchase,1213
+CUST2227,54.8,Medium,Long time since last purchase,1074
+CUST1000,54.76,Medium,Long time since last purchase,1021
+CUST2028,54.73,Medium,Low purchase frequency,502
+CUST1821,54.65,Medium,Low purchase frequency,762
+CUST1128,54.58,Medium,Long time since last purchase,1094
+CUST2233,54.57,Medium,Low customer rating,741
+CUST2081,54.57,Medium,Low purchase frequency,477
+CUST2617,54.51,Medium,Long time since last purchase,998
+CUST2414,54.48,Medium,Low purchase frequency,703
+CUST2640,54.4,Medium,Low purchase frequency,593
+CUST1246,54.37,Medium,Low customer rating,632
+CUST1089,54.36,Medium,Long time since last purchase,883
+CUST2541,54.33,Medium,Low purchase frequency,676
+CUST2553,54.33,Medium,Low customer rating,589
+CUST2097,54.21,Medium,Long time since last purchase,748
+CUST2914,54.04,Medium,Low customer rating,786
+CUST1180,54.03,Medium,Low customer rating,703
+CUST1199,53.96,Medium,Long time since last purchase,985
+CUST1083,53.95,Medium,Low purchase frequency,850
+CUST2071,53.93,Medium,Low purchase frequency,457
+CUST2274,53.93,Medium,Low purchase frequency,423
+CUST2701,53.9,Medium,Low customer rating,692
+CUST2899,53.88,Medium,Low purchase frequency,704
+CUST2582,53.81,Medium,Low customer rating,441
+CUST2283,53.79,Medium,Long time since last purchase,848
+CUST2893,53.75,Medium,Low customer rating,389
+CUST1785,53.71,Medium,Low customer rating,513
+CUST2500,53.58,Medium,Low customer rating,889
+CUST1301,53.52,Medium,Low purchase frequency,622
+CUST1646,53.43,Medium,Low purchase frequency,748
+CUST1918,53.32,Medium,Long time since last purchase,970
+CUST1569,53.26,Medium,Long time since last purchase,836
+CUST1814,53.14,Medium,Low purchase frequency,762
+CUST2539,53.12,Medium,Long time since last purchase,816
+CUST1189,52.98,Medium,Long time since last purchase,1016
+CUST2271,52.95,Medium,Long time since last purchase,1148
+CUST2670,52.89,Medium,Long time since last purchase,1336
+CUST1020,52.89,Medium,Low purchase frequency,685
+CUST2691,52.88,Medium,Long time since last purchase,907
+CUST1783,52.84,Medium,Long time since last purchase,1065
+CUST1056,52.81,Medium,Low purchase frequency,711
+CUST2735,52.73,Medium,Low customer rating,549
+CUST1555,52.68,Medium,Low purchase frequency,654
+CUST1037,52.63,Medium,Long time since last purchase,937
+CUST2734,52.62,Medium,Long time since last purchase,898
+CUST1204,52.62,Medium,Low purchase frequency,775
+CUST1313,52.52,Medium,Long time since last purchase,771
+CUST1850,52.49,Medium,Low purchase frequency,620
+CUST2417,52.49,Medium,Low purchase frequency,354
+CUST2861,52.47,Medium,Low purchase frequency,480
+CUST1895,52.37,Medium,Long time since last purchase,996
+CUST2947,52.34,Medium,Low customer rating,757
+CUST2638,52.24,Medium,Low purchase frequency,376
+CUST2966,52.15,Medium,Long time since last purchase,1001
+CUST2387,52.12,Medium,Low purchase frequency,744
+CUST2986,52.1,Medium,Low purchase frequency,640
+CUST2631,52.07,Medium,Low purchase frequency,667
+CUST2498,52.05,Medium,Low purchase frequency,500
+CUST1165,52.03,Medium,Low purchase frequency,426
+CUST2823,52.02,Medium,Long time since last purchase,1074
+CUST1908,51.99,Medium,Long time since last purchase,925
+CUST1581,51.97,Medium,Long time since last purchase,993
+CUST1576,51.86,Medium,Long time since last purchase,967
+CUST2107,51.83,Medium,Long time since last purchase,1076
+CUST2011,51.8,Medium,Low purchase frequency,739
+CUST1799,51.66,Medium,Long time since last purchase,918
+CUST1012,51.65,Medium,Long time since last purchase,1057
+CUST2258,51.65,Medium,Low customer rating,440
+CUST2796,51.64,Medium,Low customer rating,754
+CUST2697,51.64,Medium,Low customer rating,650
+CUST1488,51.57,Medium,Low purchase frequency,683
+CUST2600,51.5,Medium,Long time since last purchase,905
+CUST1222,51.5,Medium,Low purchase frequency,556
+CUST2065,51.48,Medium,Low customer rating,628
+CUST1273,51.46,Medium,Long time since last purchase,919
+CUST1782,51.41,Medium,Low customer rating,536
+CUST1579,51.38,Medium,Low purchase frequency,743
+CUST1328,51.37,Medium,Long time since last purchase,1196
+CUST1474,51.36,Medium,Long time since last purchase,1042
+CUST2873,51.31,Medium,Long time since last purchase,910
+CUST2137,51.27,Medium,Long time since last purchase,950
+CUST2253,51.24,Medium,Low purchase frequency,823
+CUST1168,51.23,Medium,Long time since last purchase,982
+CUST1545,51.18,Medium,Low customer rating,401
+CUST2046,51.15,Medium,Low purchase frequency,632
+CUST2644,51.15,Medium,Low purchase frequency,505
+CUST1152,51.05,Medium,Long time since last purchase,1055
+CUST1691,51.0,Medium,Low purchase frequency,670
+CUST1743,50.95,Medium,Low purchase frequency,417
+CUST1601,50.93,Medium,Low purchase frequency,399
+CUST1450,50.81,Medium,Long time since last purchase,1094
+CUST1391,50.77,Medium,Low customer rating,586
+CUST1197,50.7,Medium,Long time since last purchase,1011
+CUST2323,50.65,Medium,Low customer rating,480
+CUST1206,50.6,Medium,Long time since last purchase,757
+CUST1119,50.54,Medium,Low customer rating,528
+CUST2530,50.5,Medium,Low customer rating,776
+CUST2724,50.49,Medium,Long time since last purchase,817
+CUST1339,50.45,Medium,Long time since last purchase,789
+CUST2693,50.44,Medium,Low customer rating,476
+CUST1349,50.32,Medium,Low purchase frequency,378
+CUST2773,50.27,Medium,Low purchase frequency,650
+CUST2199,50.22,Medium,Low customer rating,769
+CUST1744,50.2,Medium,Low customer rating,346
+CUST2074,50.14,Medium,Low customer rating,629
+CUST1219,50.09,Medium,Low customer rating,710
+CUST2674,50.05,Medium,Long time since last purchase,960
+CUST1740,49.88,Medium,Low customer rating,484
+CUST2774,49.83,Medium,Low purchase frequency,733
+CUST1528,49.72,Medium,Long time since last purchase,858
+CUST1687,49.68,Medium,Low purchase frequency,470
+CUST2105,49.66,Medium,Low customer rating,535
+CUST1941,49.62,Medium,Low purchase frequency,527
+CUST2296,49.6,Medium,Low purchase frequency,561
+CUST2361,49.52,Medium,Low customer rating,868
+CUST1277,49.5,Medium,Low customer rating,569
+CUST1808,49.48,Medium,Long time since last purchase,955
+CUST1086,49.37,Medium,Low purchase frequency,535
+CUST2507,49.32,Medium,Long time since last purchase,739
+CUST2738,49.31,Medium,Low customer rating,655
+CUST1267,49.25,Medium,Low purchase frequency,689
+CUST2755,49.21,Medium,Long time since last purchase,721
+CUST1930,49.11,Medium,Long time since last purchase,786
+CUST2961,49.11,Medium,Low purchase frequency,284
+CUST2797,49.0,Medium,Low purchase frequency,575
+CUST2900,48.84,Medium,Long time since last purchase,916
+CUST1009,48.84,Medium,Low purchase frequency,374
+CUST1436,48.83,Medium,Low customer rating,673
+CUST2197,48.77,Medium,Long time since last purchase,915
+CUST1943,48.73,Medium,Long time since last purchase,979
+CUST2577,48.69,Medium,Low purchase frequency,616
+CUST1942,48.67,Medium,Low customer rating,687
+CUST2684,48.66,Medium,Low purchase frequency,377
+CUST2641,48.65,Medium,Long time since last purchase,1172
+CUST1651,48.64,Medium,Long time since last purchase,1182
+CUST1268,48.64,Medium,Low purchase frequency,308
+CUST1530,48.36,Medium,Low purchase frequency,566
+CUST2402,48.31,Medium,Long time since last purchase,772
+CUST2844,48.27,Medium,Low customer rating,655
+CUST2885,48.25,Medium,Low customer rating,627
+CUST2702,48.24,Medium,Low purchase frequency,488
+CUST2613,48.17,Medium,Low customer rating,500
+CUST1796,48.11,Medium,Long time since last purchase,947
+CUST2929,48.11,Medium,Long time since last purchase,816
+CUST1413,48.1,Medium,Low customer rating,606
+CUST2585,48.05,Medium,Low customer rating,637
+CUST2584,48.05,Medium,Low customer rating,631
+CUST1492,48.04,Medium,Low customer rating,623
+CUST2623,48.01,Medium,Low customer rating,508
+CUST1350,48.0,Medium,Low customer rating,686
+CUST1421,47.93,Medium,Low customer rating,326
+CUST1731,47.91,Medium,Low purchase frequency,496
+CUST2764,47.9,Medium,Low purchase frequency,586
+CUST2106,47.88,Medium,Long time since last purchase,862
+CUST2637,47.75,Medium,Long time since last purchase,814
+CUST1343,47.69,Medium,Long time since last purchase,862
+CUST2662,47.64,Medium,Low customer rating,378
+CUST2225,47.6,Medium,Low customer rating,377
+CUST1306,47.57,Medium,Long time since last purchase,954
+CUST1262,47.52,Medium,Long time since last purchase,801
+CUST2677,47.49,Medium,Long time since last purchase,825
+CUST1290,47.49,Medium,Low customer rating,218
+CUST2406,47.45,Medium,Long time since last purchase,877
+CUST1332,47.45,Medium,Low purchase frequency,483
+CUST2102,47.4,Medium,Long time since last purchase,727
+CUST2217,47.4,Medium,Low purchase frequency,388
+CUST2088,47.38,Medium,Low customer rating,515
+CUST2433,47.36,Medium,Low customer rating,582
+CUST1013,47.36,Medium,Low purchase frequency,452
+CUST1889,47.36,Medium,Low purchase frequency,346
+CUST2396,47.32,Medium,Low purchase frequency,324
+CUST2093,47.31,Medium,Low customer rating,673
+CUST2594,47.21,Medium,Low customer rating,429
+CUST1660,47.12,Medium,Low customer rating,388
+CUST1891,47.02,Medium,Low customer rating,197
+CUST2916,47.01,Medium,Low purchase frequency,226
+CUST2207,47.0,Medium,Low purchase frequency,712
+CUST1921,46.97,Medium,Low customer rating,378
+CUST2174,46.95,Medium,Long time since last purchase,741
+CUST2587,46.72,Medium,Long time since last purchase,756
+CUST2958,46.7,Medium,Long time since last purchase,942
+CUST1726,46.63,Medium,Long time since last purchase,993
+CUST1367,46.46,Medium,Low customer rating,503
+CUST2359,46.34,Medium,Low customer rating,409
+CUST1568,46.3,Medium,Long time since last purchase,783
+CUST1439,46.3,Medium,Low customer rating,589
+CUST2605,46.24,Medium,Low purchase frequency,602
+CUST2446,46.07,Medium,Low customer rating,626
+CUST2096,45.91,Medium,Low customer rating,667
+CUST2191,45.76,Medium,Low customer rating,683
+CUST1230,45.74,Medium,Long time since last purchase,927
+CUST1146,45.72,Medium,Long time since last purchase,770
+CUST2054,45.66,Medium,Low purchase frequency,595
+CUST2894,45.66,Medium,Low customer rating,572
+CUST1829,45.62,Medium,Low customer rating,557
+CUST2235,45.47,Medium,Low purchase frequency,623
+CUST2463,45.46,Medium,Low customer rating,514
+CUST1520,45.37,Medium,Long time since last purchase,921
+CUST1460,45.35,Medium,Low purchase frequency,584
+CUST2822,45.25,Medium,Low purchase frequency,589
+CUST2376,45.23,Medium,Low purchase frequency,203
+CUST1437,45.18,Medium,Low purchase frequency,427
+CUST1455,45.17,Medium,Low customer rating,577
+CUST1395,45.1,Medium,Long time since last purchase,861
+CUST1800,45.09,Medium,Low customer rating,459
+CUST1061,45.07,Medium,Low purchase frequency,433
+CUST2606,45.01,Medium,Long time since last purchase,913
+CUST2782,45.01,Medium,Low customer rating,323
+CUST2550,44.99,Medium,Long time since last purchase,896
+CUST1324,44.97,Medium,Long time since last purchase,841
+CUST1562,44.93,Medium,Low purchase frequency,485
+CUST2949,44.88,Medium,Low purchase frequency,270
+CUST2429,44.79,Medium,Low customer rating,608
+CUST1118,44.7,Medium,Low customer rating,447
+CUST1331,44.61,Medium,Long time since last purchase,753
+CUST2027,44.61,Medium,Low purchase frequency,218
+CUST1665,44.57,Medium,Long time since last purchase,821
+CUST2912,44.55,Medium,Low purchase frequency,438
+CUST2092,44.46,Medium,Long time since last purchase,743
+CUST1370,44.44,Medium,Low purchase frequency,441
+CUST2455,44.44,Medium,Low purchase frequency,441
+CUST2536,44.42,Medium,Low customer rating,668
+CUST1144,44.33,Medium,Low purchase frequency,530
+CUST2244,44.32,Medium,Low purchase frequency,698
+CUST2040,44.18,Medium,Low customer rating,708
+CUST1708,44.18,Medium,Low customer rating,541
+CUST2780,44.17,Medium,Low customer rating,246
+CUST2721,44.12,Medium,Low customer rating,552
+CUST2112,44.09,Medium,Low customer rating,614
+CUST1816,44.05,Medium,Low customer rating,510
+CUST2218,44.04,Medium,Low customer rating,383
+CUST1529,44.03,Medium,Low customer rating,160
+CUST1594,43.95,Medium,Low purchase frequency,279
+CUST1336,43.92,Medium,Low purchase frequency,129
+CUST2240,43.78,Medium,Low customer rating,550
+CUST2872,43.74,Medium,Low customer rating,595
+CUST1571,43.73,Medium,Long time since last purchase,796
+CUST2590,43.69,Medium,Low customer rating,350
+CUST2239,43.66,Medium,Long time since last purchase,744
+CUST1431,43.63,Medium,Low purchase frequency,720
+CUST1423,43.63,Medium,Low purchase frequency,291
+CUST2204,43.58,Medium,Low customer rating,705
+CUST1148,43.53,Medium,Low purchase frequency,501
+CUST1951,43.44,Medium,Long time since last purchase,1033
+CUST2607,43.44,Medium,Long time since last purchase,758
+CUST2124,43.42,Medium,Low purchase frequency,492
+CUST2457,43.38,Medium,Low purchase frequency,596
+CUST2801,43.37,Medium,Low customer rating,170
+CUST2056,43.33,Medium,Low purchase frequency,475
+CUST1732,43.22,Medium,Low customer rating,713
+CUST1373,43.19,Medium,Low customer rating,594
+CUST2079,43.04,Medium,Low customer rating,371
+CUST1383,43.0,Medium,Low purchase frequency,501
+CUST2279,42.92,Medium,Low purchase frequency,214
+CUST2280,42.89,Medium,Low purchase frequency,454
+CUST2237,42.81,Medium,Low purchase frequency,311
+CUST2282,42.77,Medium,Low customer rating,487
+CUST2574,42.75,Medium,Long time since last purchase,737
+CUST1592,42.69,Medium,Low customer rating,444
+CUST2190,42.67,Medium,Long time since last purchase,920
+CUST1415,42.67,Medium,Low customer rating,397
+CUST1532,42.65,Medium,Long time since last purchase,735
+CUST2370,42.56,Medium,Low purchase frequency,612
+CUST2942,42.55,Medium,Low customer rating,544
+CUST2595,42.49,Medium,Low customer rating,417
+CUST2295,42.42,Medium,Low customer rating,567
+CUST2266,42.4,Medium,Long time since last purchase,919
+CUST2527,42.35,Medium,Low customer rating,566
+CUST2367,42.35,Medium,Low customer rating,275
+CUST2678,42.33,Medium,Low customer rating,688
+CUST1864,42.16,Medium,Low purchase frequency,459
+CUST1644,42.09,Medium,Low customer rating,452
+CUST2143,42.08,Medium,Long time since last purchase,757
+CUST2201,41.95,Medium,Long time since last purchase,730
+CUST2470,41.8,Medium,Long time since last purchase,661
+CUST1792,41.77,Medium,Low purchase frequency,661
+CUST1192,41.73,Medium,Long time since last purchase,663
+CUST2061,41.69,Medium,Long time since last purchase,768
+CUST1251,41.67,Medium,Low customer rating,484
+CUST2575,41.59,Medium,Low purchase frequency,346
+CUST2807,41.52,Medium,Low customer rating,66
+CUST1034,41.51,Medium,Low customer rating,230
+CUST2723,41.42,Medium,Low purchase frequency,435
+CUST2160,41.32,Medium,Long time since last purchase,745
+CUST2752,41.32,Medium,Low purchase frequency,679
+CUST2777,41.32,Medium,Low purchase frequency,304
+CUST2399,41.17,Medium,Long time since last purchase,978
+CUST1125,41.14,Medium,Low customer rating,493
+CUST1616,41.09,Medium,Low purchase frequency,446
+CUST2360,41.09,Medium,Low purchase frequency,97
+CUST1537,40.93,Medium,Low purchase frequency,454
+CUST2281,40.79,Medium,Low purchase frequency,111
+CUST1408,40.78,Medium,Low customer rating,500
+CUST2668,40.71,Medium,Low customer rating,371
+CUST2560,40.69,Medium,Low customer rating,604
+CUST1321,40.65,Medium,Low purchase frequency,577
+CUST2423,40.59,Medium,Long time since last purchase,646
+CUST2883,40.57,Medium,Low customer rating,632
+CUST1975,40.57,Medium,Low customer rating,198
+CUST1378,40.53,Medium,Low customer rating,636
+CUST2216,40.5,Medium,Long time since last purchase,890
+CUST2356,40.4,Medium,Low customer rating,93
+CUST2478,40.39,Medium,Low purchase frequency,520
+CUST1561,40.28,Medium,Long time since last purchase,644
+CUST1377,40.28,Medium,Low customer rating,485
+CUST2710,40.17,Medium,Low customer rating,462
+CUST1425,40.16,Medium,Low customer rating,720
+CUST1650,40.15,Medium,Long time since last purchase,771
+CUST2939,40.09,Medium,Low purchase frequency,371
+CUST1509,40.03,Medium,Low customer rating,518
+CUST1833,39.98,Low,Low purchase frequency,591
+CUST1102,39.92,Low,Low customer rating,488
+CUST1156,39.88,Low,Low purchase frequency,365
+CUST2526,39.86,Low,Low customer rating,217
+CUST1680,39.79,Low,Low customer rating,293
+CUST2910,39.77,Low,Low purchase frequency,536
+CUST2972,39.75,Low,Long time since last purchase,666
+CUST1683,39.73,Low,Low purchase frequency,511
+CUST1538,39.7,Low,Low customer rating,526
+CUST2025,39.68,Low,Low customer rating,630
+CUST2312,39.67,Low,Low customer rating,236
+CUST1911,39.47,Low,Long time since last purchase,613
+CUST1254,39.47,Low,Low customer rating,255
+CUST2075,39.45,Low,Long time since last purchase,731
+CUST1153,39.44,Low,Low purchase frequency,488
+CUST2149,39.43,Low,Low customer rating,230
+CUST1986,39.4,Low,Long time since last purchase,615
+CUST1188,39.2,Low,Low customer rating,424
+CUST1505,39.18,Low,Low purchase frequency,305
+CUST2699,39.18,Low,Low customer rating,203
+CUST2682,39.11,Low,Low customer rating,583
+CUST1861,39.04,Low,Low purchase frequency,347
+CUST1384,39.03,Low,Low customer rating,459
+CUST1084,38.92,Low,Low purchase frequency,226
+CUST2223,38.85,Low,Low purchase frequency,625
+CUST2991,38.84,Low,Low customer rating,357
+CUST2616,38.83,Low,Low customer rating,636
+CUST2242,38.83,Low,Low customer rating,158
+CUST2448,38.82,Low,Low customer rating,217
+CUST2306,38.73,Low,Low purchase frequency,355
+CUST1730,38.68,Low,Long time since last purchase,613
+CUST2988,38.66,Low,Low customer rating,427
+CUST2549,38.6,Low,Low customer rating,545
+CUST2076,38.52,Low,Low purchase frequency,232
+CUST2599,38.46,Low,Low purchase frequency,204
+CUST2413,38.42,Low,Low purchase frequency,125
+CUST1632,38.38,Low,Long time since last purchase,682
+CUST2400,38.35,Low,Low customer rating,453
+CUST1400,38.32,Low,Low customer rating,481
+CUST2656,38.32,Low,Low purchase frequency,217
+CUST2247,38.31,Low,Low purchase frequency,156
+CUST1414,38.28,Low,Low customer rating,409
+CUST2695,38.26,Low,Low purchase frequency,343
+CUST1693,38.19,Low,Long time since last purchase,691
+CUST2264,38.15,Low,Low customer rating,557
+CUST2152,38.08,Low,Low purchase frequency,137
+CUST2381,37.96,Low,Low purchase frequency,407
+CUST2388,37.92,Low,Low purchase frequency,439
+CUST1291,37.82,Low,Long time since last purchase,864
+CUST2514,37.81,Low,Low customer rating,347
+CUST2634,37.73,Low,Low customer rating,536
+CUST1553,37.72,Low,Low purchase frequency,172
+CUST1962,37.68,Low,Low customer rating,136
+CUST1250,37.54,Low,Low customer rating,387
+CUST2229,37.44,Low,Long time since last purchase,654
+CUST1489,37.41,Low,Low purchase frequency,236
+CUST2150,37.29,Low,Low customer rating,627
+CUST1593,37.22,Low,Long time since last purchase,685
+CUST2933,37.19,Low,Low purchase frequency,341
+CUST2956,37.14,Low,Long time since last purchase,740
+CUST1617,37.13,Low,Low customer rating,308
+CUST1880,37.03,Low,Low purchase frequency,198
+CUST2355,36.98,Low,Low customer rating,309
+CUST2220,36.92,Low,Low purchase frequency,310
+CUST1747,36.91,Low,Low purchase frequency,485
+CUST2757,36.89,Low,Low customer rating,303
+CUST2163,36.73,Low,Low purchase frequency,481
+CUST1224,36.54,Low,Low purchase frequency,453
+CUST2151,36.38,Low,Low purchase frequency,357
+CUST1418,36.12,Low,Low purchase frequency,123
+CUST2663,36.07,Low,Low customer rating,368
+CUST1182,36.07,Low,Low purchase frequency,133
+CUST2696,36.05,Low,Long time since last purchase,692
+CUST1478,35.98,Low,Low customer rating,320
+CUST2816,35.94,Low,Low customer rating,356
+CUST1823,35.84,Low,Low purchase frequency,295
+CUST2252,35.82,Low,Long time since last purchase,655
+CUST2128,35.76,Low,Low customer rating,439
+CUST2987,35.75,Low,Low customer rating,596
+CUST1326,35.74,Low,Low customer rating,408
+CUST2182,35.71,Low,Long time since last purchase,631
+CUST1195,35.71,Low,Low customer rating,474
+CUST1654,35.68,Low,Low purchase frequency,512
+CUST1006,35.68,Low,Low purchase frequency,146
+CUST2615,35.67,Low,Low purchase frequency,265
+CUST2352,35.57,Low,Low customer rating,186
+CUST2310,35.54,Low,Low customer rating,523
+CUST1775,35.36,Low,Low purchase frequency,413
+CUST2971,35.24,Low,Low purchase frequency,447
+CUST1533,35.17,Low,Long time since last purchase,550
+CUST1703,35.16,Low,Long time since last purchase,632
+CUST2779,35.14,Low,Low customer rating,362
+CUST1223,35.05,Low,Low customer rating,414
+CUST2556,35.02,Low,Long time since last purchase,627
+CUST2287,34.96,Low,Low customer rating,398
+CUST1376,34.95,Low,Low customer rating,524
+CUST1041,34.95,Low,Low purchase frequency,255
+CUST2992,34.93,Low,Long time since last purchase,755
+CUST2953,34.83,Low,Long time since last purchase,573
+CUST2915,34.82,Low,Low customer rating,98
+CUST2712,34.81,Low,Low customer rating,201
+CUST1185,34.72,Low,Low purchase frequency,294
+CUST1468,34.65,Low,Long time since last purchase,828
+CUST1005,34.63,Low,Low customer rating,117
+CUST1309,34.62,Low,Low purchase frequency,408
+CUST2471,34.53,Low,Low purchase frequency,244
+CUST1137,34.46,Low,Low purchase frequency,396
+CUST1964,34.45,Low,Low purchase frequency,337
+CUST2047,34.43,Low,Low customer rating,501
+CUST1705,34.4,Low,Low purchase frequency,357
+CUST1312,34.39,Low,Low customer rating,407
+CUST2136,34.38,Low,Low customer rating,538
+CUST1909,34.32,Low,Low purchase frequency,543
+CUST2819,34.32,Low,Low purchase frequency,229
+CUST2955,34.32,Low,Low purchase frequency,155
+CUST1753,34.29,Low,Low purchase frequency,128
+CUST1968,34.28,Low,Low customer rating,367
+CUST2878,34.23,Low,Long time since last purchase,688
+CUST1590,34.23,Low,Low customer rating,393
+CUST2135,34.22,Low,Low customer rating,365
+CUST1795,34.15,Low,Long time since last purchase,643
+CUST2843,34.12,Low,Long time since last purchase,687
+CUST2144,34.08,Low,Low customer rating,198
+CUST1886,34.07,Low,Low purchase frequency,474
+CUST1931,33.87,Low,Low customer rating,449
+CUST2375,33.85,Low,Low purchase frequency,321
+CUST1079,33.84,Low,Low customer rating,201
+CUST1822,33.8,Low,Long time since last purchase,760
+CUST2449,33.62,Low,Low customer rating,322
+CUST2343,33.6,Low,Low purchase frequency,294
+CUST2978,33.52,Low,Low customer rating,463
+CUST1360,33.5,Low,Low customer rating,495
+CUST2328,33.47,Low,Low purchase frequency,246
+CUST2248,33.39,Low,Low purchase frequency,267
+CUST2109,33.37,Low,Low purchase frequency,372
+CUST1105,33.15,Low,Low purchase frequency,423
+CUST2228,33.14,Low,Low customer rating,269
+CUST2798,33.11,Low,Low customer rating,314
+CUST1973,33.08,Low,Low customer rating,324
+CUST1748,33.07,Low,Low customer rating,255
+CUST1599,33.04,Low,Low customer rating,533
+CUST1052,32.97,Low,Low purchase frequency,194
+CUST2450,32.86,Low,Low purchase frequency,245
+CUST1674,32.82,Low,Low purchase frequency,311
+CUST1057,32.82,Low,Low purchase frequency,36
+CUST2689,32.75,Low,Long time since last purchase,629
+CUST1487,32.75,Low,Low customer rating,165
+CUST2026,32.7,Low,Low customer rating,268
+CUST1239,32.63,Low,Low purchase frequency,285
+CUST2159,32.59,Low,Low customer rating,135
+CUST2051,32.54,Low,Low purchase frequency,159
+CUST1014,32.5,Low,Low purchase frequency,228
+CUST1544,32.49,Low,Low purchase frequency,166
+CUST1442,32.44,Low,Low purchase frequency,97
+CUST2481,32.41,Low,Low customer rating,342
+CUST1227,32.37,Low,Low purchase frequency,196
+CUST1907,32.36,Low,Low purchase frequency,321
+CUST1574,32.35,Low,Low purchase frequency,195
+CUST2860,32.33,Low,Low purchase frequency,356
+CUST2768,32.25,Low,Low customer rating,462
+CUST1897,32.25,Low,Low purchase frequency,401
+CUST2886,32.17,Low,Low purchase frequency,396
+CUST1282,32.17,Low,Low customer rating,91
+CUST1858,32.16,Low,Low purchase frequency,358
+CUST1932,32.12,Low,Low customer rating,208
+CUST2212,32.11,Low,Low customer rating,398
+CUST1170,32.09,Low,Long time since last purchase,703
+CUST1004,32.03,Low,Low customer rating,450
+CUST1724,32.03,Low,Low purchase frequency,314
+CUST2533,31.99,Low,Low purchase frequency,306
+CUST2635,31.96,Low,Low customer rating,92
+CUST1950,31.94,Low,Long time since last purchase,595
+CUST1723,31.88,Low,Low purchase frequency,303
+CUST2104,31.87,Low,Low purchase frequency,424
+CUST2847,31.73,Low,Long time since last purchase,569
+CUST1417,31.59,Low,Low purchase frequency,92
+CUST1445,31.52,Low,Low customer rating,521
+CUST1296,31.49,Low,Low purchase frequency,93
+CUST1739,31.46,Low,Low purchase frequency,503
+CUST2982,31.44,Low,Low purchase frequency,139
+CUST2068,31.35,Low,Low customer rating,239
+CUST2372,31.34,Low,Low customer rating,396
+CUST2503,31.2,Low,Low customer rating,373
+CUST2940,31.12,Low,Low purchase frequency,285
+CUST1314,30.95,Low,Low purchase frequency,281
+CUST1854,30.94,Low,Long time since last purchase,558
+CUST1023,30.93,Low,Low customer rating,32
+CUST2444,30.86,Low,Long time since last purchase,652
+CUST2014,30.63,Low,Low customer rating,430
+CUST1620,30.59,Low,Low customer rating,445
+CUST1663,30.58,Low,Low purchase frequency,262
+CUST2119,30.56,Low,Long time since last purchase,612
+CUST1600,30.36,Low,Low customer rating,307
+CUST2943,30.36,Low,Low customer rating,125
+CUST1412,30.14,Low,Low purchase frequency,153
+CUST1444,30.08,Low,Low customer rating,68
+CUST1810,30.05,Low,Long time since last purchase,594
+CUST1422,30.05,Low,Low purchase frequency,438
+CUST1873,29.96,Low,Low customer rating,253
+CUST1734,29.95,Low,Long time since last purchase,522
+CUST1550,29.88,Low,Low customer rating,239
+CUST1416,29.8,Low,Low purchase frequency,433
+CUST1855,29.78,Low,Low customer rating,187
+CUST2685,29.77,Low,Low customer rating,173
+CUST1863,29.75,Low,Long time since last purchase,558
+CUST2284,29.58,Low,Low purchase frequency,383
+CUST1698,29.3,Low,Low purchase frequency,142
+CUST1906,29.23,Low,Low customer rating,37
+CUST2629,29.15,Low,Low customer rating,428
+CUST1901,29.04,Low,Low customer rating,359
+CUST1043,28.86,Low,Long time since last purchase,559
+CUST1451,28.77,Low,Low purchase frequency,413
+CUST1604,28.73,Low,Low purchase frequency,185
+CUST2977,28.55,Low,Low purchase frequency,117
+CUST2976,28.53,Low,Low customer rating,380
+CUST2586,28.49,Low,Low purchase frequency,337
+CUST2003,28.38,Low,Long time since last purchase,586
+CUST2418,28.36,Low,Long time since last purchase,535
+CUST1584,28.32,Low,Low purchase frequency,91
+CUST2334,28.29,Low,Low customer rating,455
+CUST1456,28.27,Low,Low customer rating,399
+CUST2506,28.26,Low,Long time since last purchase,584
+CUST1046,28.21,Low,Low customer rating,328
+CUST1371,28.15,Low,Low customer rating,171
+CUST2771,28.12,Low,Low purchase frequency,453
+CUST2926,28.08,Low,Low customer rating,502
+CUST1074,28.08,Low,Low customer rating,201
+CUST2275,28.04,Low,Low purchase frequency,275
+CUST2591,28.0,Low,Low customer rating,262
+CUST1652,27.95,Low,Low purchase frequency,396
+CUST2717,27.82,Low,Low customer rating,320
+CUST1147,27.78,Low,Low purchase frequency,283
+CUST2261,27.73,Low,Low customer rating,285
+CUST1323,27.68,Low,Low customer rating,476
+CUST1903,27.66,Low,Low purchase frequency,426
+CUST1458,27.66,Low,Low customer rating,223
+CUST2559,27.66,Low,Low purchase frequency,91
+CUST2658,27.57,Low,Low customer rating,264
+CUST2803,27.56,Low,Low purchase frequency,264
+CUST1406,27.55,Low,Low purchase frequency,249
+CUST1605,27.51,Low,Low purchase frequency,377
+CUST1728,27.49,Low,Low purchase frequency,357
+CUST1229,27.49,Low,Low purchase frequency,327
+CUST1754,27.49,Low,Low purchase frequency,297
+CUST2732,27.39,Low,Low customer rating,126
+CUST1702,27.3,Low,Low customer rating,153
+CUST2419,27.29,Low,Low purchase frequency,113
+CUST2167,27.19,Low,Low customer rating,112
+CUST2438,27.16,Low,Long time since last purchase,500
+CUST2766,27.11,Low,Low customer rating,161
+CUST1016,26.99,Low,Low purchase frequency,303
+CUST1242,26.96,Low,Low customer rating,278
+CUST1688,26.65,Low,Low purchase frequency,380
+CUST1333,26.62,Low,Low purchase frequency,292
+CUST2733,26.57,Low,Low customer rating,166
+CUST2952,26.55,Low,Low customer rating,217
+CUST2998,26.52,Low,Low customer rating,358
+CUST1129,26.41,Low,Low purchase frequency,433
+CUST1068,26.35,Low,Low customer rating,394
+CUST1256,26.06,Low,Low customer rating,425
+CUST1904,26.06,Low,Low purchase frequency,36
+CUST2924,25.85,Low,Low customer rating,290
+CUST2451,25.71,Low,Long time since last purchase,577
+CUST1070,25.71,Low,Low purchase frequency,355
+CUST2524,25.65,Low,Long time since last purchase,588
+CUST2909,25.53,Low,Low customer rating,424
+CUST2103,25.46,Low,Low customer rating,178
+CUST1221,25.38,Low,Low customer rating,206
+CUST2004,25.31,Low,Low customer rating,303
+CUST1996,25.3,Low,Low purchase frequency,216
+CUST1049,25.23,Low,Low purchase frequency,251
+CUST1849,25.2,Low,Low customer rating,380
+CUST1896,25.11,Low,Low customer rating,388
+CUST1094,25.11,Low,Low customer rating,348
+CUST1295,25.1,Low,Low purchase frequency,186
+CUST2060,24.72,Low,Low customer rating,264
+CUST2386,24.67,Low,Low purchase frequency,221
+CUST1287,24.6,Low,Low purchase frequency,132
+CUST1134,24.59,Low,Low customer rating,385
+CUST2285,24.5,Low,Low customer rating,94
+CUST1067,24.44,Low,Long time since last purchase,404
+CUST2742,24.37,Low,Low purchase frequency,172
+CUST1231,24.32,Low,Low purchase frequency,336
+CUST2827,24.27,Low,Low purchase frequency,190
+CUST1411,24.25,Low,Low purchase frequency,0
+CUST1340,24.18,Low,Low purchase frequency,256
+CUST1143,24.18,Low,Low purchase frequency,226
+CUST1874,24.16,Low,Low customer rating,341
+CUST1007,24.07,Low,Low purchase frequency,342
+CUST2297,24.0,Low,Low purchase frequency,219
+CUST1586,23.93,Low,Low purchase frequency,310
+CUST1126,23.87,Low,Long time since last purchase,416
+CUST1645,23.69,Low,Low customer rating,133
+CUST1575,23.37,Low,Low purchase frequency,194
+CUST1557,23.22,Low,Long time since last purchase,453
+CUST1572,23.18,Low,Low customer rating,238
+CUST1657,23.1,Low,Low customer rating,323
+CUST2792,22.95,Low,Low customer rating,289
+CUST1684,22.93,Low,Low purchase frequency,249
+CUST2226,22.91,Low,Low purchase frequency,372
+CUST1493,22.86,Low,Low customer rating,139
+CUST1539,22.77,Low,Low purchase frequency,298
+CUST1334,22.67,Low,Low customer rating,383
+CUST2057,22.62,Low,Low purchase frequency,160
+CUST1801,22.37,Low,Long time since last purchase,419
+CUST1186,22.36,Low,Low purchase frequency,1
+CUST1101,22.28,Low,Long time since last purchase,444
+CUST1715,22.09,Low,Low customer rating,177
+CUST1642,21.99,Low,Low customer rating,62
+CUST1971,21.95,Low,Low purchase frequency,389
+CUST1258,21.8,Low,Low customer rating,232
+CUST1882,21.79,Low,Low purchase frequency,62
+CUST2294,21.61,Low,Low customer rating,190
+CUST2833,21.58,Low,Low customer rating,133
+CUST1039,21.53,Low,Low customer rating,360
+CUST1934,21.51,Low,Low purchase frequency,126
+CUST1218,21.4,Low,Low purchase frequency,283
+CUST1786,21.3,Low,Low purchase frequency,123
+CUST1344,21.13,Low,Low customer rating,168
+CUST2415,21.12,Low,Low customer rating,356
+CUST1659,21.09,Low,Low purchase frequency,322
+CUST2765,21.06,Low,Low customer rating,338
+CUST2412,21.05,Low,Low purchase frequency,260
+CUST1757,21.0,Low,Long time since last purchase,376
+CUST1635,20.97,Low,Low customer rating,134
+CUST2158,20.94,Low,Low purchase frequency,162
+CUST1011,20.85,Low,Low purchase frequency,5
+CUST1767,20.81,Low,Low purchase frequency,66
+CUST1955,20.76,Low,Low purchase frequency,97
+CUST1547,20.75,Low,Low purchase frequency,62
+CUST1247,20.63,Low,Low customer rating,260
+CUST1933,20.5,Low,Low customer rating,315
+CUST1428,20.22,Low,Low customer rating,325
+CUST2021,20.16,Low,Low customer rating,249
+CUST1603,19.64,Low,Low customer rating,183
+CUST2139,19.24,Low,Low customer rating,187
+CUST1174,19.18,Low,Long time since last purchase,388
+CUST2713,19.06,Low,Low customer rating,95
+CUST1770,18.86,Low,Low customer rating,92
+CUST2194,18.73,Low,Low customer rating,61
+CUST1381,18.71,Low,Low customer rating,133
+CUST2907,18.7,Low,Low purchase frequency,321
+CUST2131,18.56,Low,Low customer rating,208
+CUST2339,18.15,Low,Low customer rating,200
+CUST2012,17.82,Low,Low purchase frequency,67
+CUST1843,17.75,Low,Low customer rating,93
+CUST2525,17.21,Low,Low customer rating,261
+CUST1069,16.99,Low,Low purchase frequency,162
+CUST2486,16.97,Low,Low customer rating,67
+CUST1184,16.69,Low,Low purchase frequency,158
+CUST2728,16.62,Low,Low purchase frequency,197
+CUST1103,16.48,Low,Low customer rating,187
+CUST1956,16.39,Low,Low purchase frequency,256
+CUST2603,16.3,Low,Low purchase frequency,146
+CUST1735,16.08,Low,Low customer rating,4
+CUST1356,15.65,Low,Low purchase frequency,35
+CUST2397,15.64,Low,Long time since last purchase,286
+CUST1953,15.64,Low,Low customer rating,239
+CUST1259,15.41,Low,Low customer rating,235
+CUST2683,15.27,Low,Low customer rating,231
+CUST2740,15.21,Low,Low purchase frequency,125
+CUST1711,15.01,Low,Low customer rating,284
+CUST2690,14.38,Low,Low customer rating,110
+CUST2657,14.2,Low,Low purchase frequency,110
+CUST2707,14.14,Low,Low customer rating,177
+CUST2320,14.04,Low,Long time since last purchase,268
+CUST2750,13.89,Low,Low purchase frequency,158
+CUST1028,13.56,Low,Long time since last purchase,279
+CUST1504,13.56,Low,Long time since last purchase,254
+CUST2866,13.11,Low,Low customer rating,136
+CUST1924,12.93,Low,Low purchase frequency,125
+CUST2020,12.91,Low,Low customer rating,258
+CUST2921,12.56,Low,Low purchase frequency,4
+CUST1440,11.62,Low,Low purchase frequency,7
+CUST1521,11.41,Low,Low customer rating,131
+CUST2646,11.39,Low,Low purchase frequency,156
+CUST2330,11.26,Low,Low customer rating,67
+CUST2517,11.08,Low,Low purchase frequency,173
+CUST1970,10.71,Low,Long time since last purchase,264
+CUST1802,9.95,Low,Low purchase frequency,146
+CUST2154,9.83,Low,Low customer rating,5
+CUST1637,9.38,Low,Low purchase frequency,146
+CUST1819,8.6,Low,Low customer rating,208
+CUST1040,8.08,Low,Low purchase frequency,183
+CUST2564,6.79,Low,Low purchase frequency,141
+CUST1853,4.34,Low,Low purchase frequency,131
+CUST1905,4.14,Low,Low customer rating,1
+CUST2973,2.93,Low,Low purchase frequency,2
+CUST2177,2.89,Low,Low customer rating,5

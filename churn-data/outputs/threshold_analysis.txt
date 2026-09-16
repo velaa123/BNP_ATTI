@@ -1,0 +1,111 @@
+MULTI-MODEL THRESHOLD ANALYSIS
+===========================================================================
+Thresholds selected using OOF training probabilities.
+The held-out test set is used only for final evaluation.
+
+
+===========================================================================
+Random Forest
+===========================================================================
+
+Saved threshold: 0.52
+Best OOF accuracy threshold: 0.73
+Best OOF F1 threshold: 0.50
+Test ROC-AUC: 0.8237
+
+TEST — ACCURACY-OPTIMIZED
+Threshold: 0.73
+Accuracy: 0.8050
+Precision: 0.6486
+Recall: 0.4800
+F1: 0.5517
+
+TEST — F1-OPTIMIZED
+Threshold: 0.50
+Accuracy: 0.7000
+Precision: 0.4412
+Recall: 0.7500
+F1: 0.5556
+
+===========================================================================
+XGBoost
+===========================================================================
+
+Saved threshold: 0.5600000000000003
+Best OOF accuracy threshold: 0.74
+Best OOF F1 threshold: 0.53
+Test ROC-AUC: 0.8221
+
+TEST — ACCURACY-OPTIMIZED
+Threshold: 0.74
+Accuracy: 0.8025
+Precision: 0.6207
+Recall: 0.5400
+F1: 0.5775
+
+TEST — F1-OPTIMIZED
+Threshold: 0.53
+Accuracy: 0.7150
+Precision: 0.4562
+Recall: 0.7300
+F1: 0.5615
+
+===========================================================================
+CatBoost
+===========================================================================
+
+Saved threshold: 0.2900000000000001
+Best OOF accuracy threshold: 0.50
+Best OOF F1 threshold: 0.29
+Test ROC-AUC: 0.8271
+
+TEST — ACCURACY-OPTIMIZED
+Threshold: 0.50
+Accuracy: 0.8025
+Precision: 0.6265
+Recall: 0.5200
+F1: 0.5683
+
+TEST — F1-OPTIMIZED
+Threshold: 0.29
+Accuracy: 0.7425
+Precision: 0.4898
+Recall: 0.7200
+F1: 0.5830
+
+===========================================================================
+LightGBM
+===========================================================================
+
+Saved threshold: 0.2900000000000001
+Best OOF accuracy threshold: 0.53
+Best OOF F1 threshold: 0.29
+Test ROC-AUC: 0.8313
+
+TEST — ACCURACY-OPTIMIZED
+Threshold: 0.53
+Accuracy: 0.7975
+Precision: 0.6462
+Recall: 0.4200
+F1: 0.5091
+
+TEST — F1-OPTIMIZED
+Threshold: 0.29
+Accuracy: 0.7075
+Precision: 0.4491
+Recall: 0.7500
+F1: 0.5618
+
+===========================================================================
+FINAL COMPARISON
+===========================================================================
+
+        model  saved_threshold  accuracy_threshold  accuracy_threshold_accuracy  accuracy_threshold_precision  accuracy_threshold_recall  accuracy_threshold_f1  f1_threshold  f1_threshold_accuracy  f1_threshold_f1  test_roc_auc
+Random Forest             0.52                0.73                       0.8050                      0.648649                       0.48               0.551724          0.50                 0.7000         0.555556      0.823667
+      XGBoost             0.56                0.74                       0.8025                      0.620690                       0.54               0.577540          0.53                 0.7150         0.561538      0.822067
+     CatBoost             0.29                0.50                       0.8025                      0.626506                       0.52               0.568306          0.29                 0.7425         0.582996      0.827133
+     LightGBM             0.29                0.53                       0.7975                      0.646154                       0.42               0.509091          0.29                 0.7075         0.561798      0.831333
+
+IMPORTANT:
+Thresholds were selected using out-of-fold training probabilities.
+The held-out test set was not used to select thresholds.

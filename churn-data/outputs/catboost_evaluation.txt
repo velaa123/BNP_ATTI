@@ -1,0 +1,74 @@
+CATBOOST CUSTOMER CHURN MODEL EVALUATION
+======================================================================
+Dataset rows: 2000
+Features: 21
+Training rows: 1600
+Testing rows: 400
+
+Target Distribution
+Active: 1500 (75.00%)
+Churned: 500 (25.00%)
+
+Best Hyperparameters
+random_strength: 2.0
+learning_rate: 0.01
+l2_leaf_reg: 3
+iterations: 300
+depth: 4
+border_count: 32
+bagging_temperature: 1.0
+
+Best CV ROC-AUC: 0.8607
+Prediction Threshold: 0.29
+
+Out-of-Fold Training Performance
+Accuracy: 0.7706
+Precision: 0.5267
+Recall: 0.8150
+F1: 0.6398
+
+HELD-OUT TEST PERFORMANCE
+Accuracy: 0.7425
+Precision: 0.4898
+Recall: 0.7200
+F1: 0.5830
+ROC-AUC: 0.8271
+
+Confusion Matrix
+[[225  75]
+ [ 28  72]]
+
+Classification Report
+              precision    recall  f1-score   support
+
+      Active       0.89      0.75      0.81       300
+     Churned       0.49      0.72      0.58       100
+
+    accuracy                           0.74       400
+   macro avg       0.69      0.73      0.70       400
+weighted avg       0.79      0.74      0.76       400
+
+Training Accuracy: 0.7719
+Testing Accuracy: 0.7425
+Accuracy Gap: 0.0294
+
+Target Definition
+Customers at or above the 75th percentile of recency_days are labeled as churned.
+recency_days is excluded from model features to avoid direct target leakage.
+
+Top Feature Importances
+tenure_days: 31.136023
+orders_per_month: 28.951809
+purchase_activity_ratio: 21.769871
+total_quantity: 1.881925
+average_quantity_per_order: 1.607731
+revenue_per_unit: 1.415353
+average_purchase_frequency: 1.395362
+max_purchase_frequency: 1.394415
+revenue_per_order: 1.383108
+average_order_value: 1.363594
+age: 1.323259
+total_revenue: 1.267494
+average_unit_price: 1.109640
+total_cancellations: 1.098458
+cancellation_rate: 1.071981

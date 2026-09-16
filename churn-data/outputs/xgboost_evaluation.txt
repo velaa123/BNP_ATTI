@@ -1,0 +1,39 @@
+======================================================================
+CUSTOMER CHURN PROJECT - XGBOOST EVALUATION
+======================================================================
+
+MODEL
+----------------------------------------------------------------------
+Model type                : XGBoost
+Prediction threshold      : 0.56
+Cross-validation ROC-AUC  : 0.8525
+
+BEST HYPERPARAMETERS
+----------------------------------------------------------------------
+subsample                : 0.7
+scale_pos_weight         : 3.0
+reg_lambda               : 3
+reg_alpha                : 0.5
+n_estimators             : 600
+min_child_weight         : 5
+max_depth                : 2
+learning_rate            : 0.01
+gamma                    : 0.3
+colsample_bytree         : 0.7
+
+HELD-OUT TEST PERFORMANCE
+----------------------------------------------------------------------
+Accuracy                  : 0.7250 (72.50%)
+Precision                 : 0.4675 (46.75%)
+Recall                    : 0.7200 (72.00%)
+F1 Score                  : 0.5669 (56.69%)
+ROC-AUC                   : 0.8221 (82.21%)
+
+CONFUSION MATRIX
+----------------------------------------------------------------------
+                 Predicted
+                 Active  Churned
+Actual Active       218       82
+Actual Churned       28       72
+
+======================================================================
