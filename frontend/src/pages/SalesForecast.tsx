@@ -2,8 +2,22 @@ import KPICard from '../components/dashboard/KPICard'
 import SalesForecastChart from '../components/forecasting/SalesForecastChart'
 import ProductForecastTable from '../components/forecasting/ProductForecastTable'
 import DemandChart from '../components/forecasting/DemandChart'
+import { api } from '../services/api'
+import { useApi } from '../hooks/useApi'
 
 function SalesForecast() {
+  const { data: salesForecast } = useApi(api.getSalesForecast)
+  const { data: demandForecast } = useApi(api.getDemandForecast)
+
+  const forecastPoints = (salesForecast ?? []).filter((p) => p.forecast !== undefined)
+  const nextQuarterSales = forecastPoints.reduce((sum, p) => sum + (p.forecast ?? 0), 0)
+
+  const demandPoints = demandForecast ?? []
+  // Forecast points are the ones beyond the real historical data —
+  // same 3-month horizon as sales, taken from the tail of the array.
+  const futureDemand = demandPoints.slice(-3)
+  const nextQuarterDemand = futureDemand.reduce((sum, p) => sum + p.demand, 0)
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -26,8 +40,8 @@ function SalesForecast() {
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KPICard
           title="Next Quarter Sales"
-          value="—"
-          change="Pending"
+          value={forecastPoints.length > 0 ? `₹${nextQuarterSales.toLocaleString('en-IN')}` : '—'}
+          change={forecastPoints.length > 0 ? undefined : 'Pending'}
           description="forecast output"
           icon="↗"
           trend="up"
@@ -44,8 +58,8 @@ function SalesForecast() {
 
         <KPICard
           title="Predicted Demand"
-          value="—"
-          change="Pending"
+          value={futureDemand.length > 0 ? `${nextQuarterDemand.toLocaleString('en-IN')} units` : '—'}
+          change={futureDemand.length > 0 ? undefined : 'Pending'}
           description="next quarter"
           icon="▥"
           trend="up"
@@ -85,14 +99,14 @@ function SalesForecast() {
           </p>
 
           <h2 className="mt-2 text-xl font-bold text-white">
-            Forecast insights will appear once the sales model is connected.
+            Forecast insights are generated from real historical sales patterns.
           </h2>
 
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
-            The forecasting pipeline will analyze historical sales patterns,
-            identify demand trends and seasonality, and generate predictions
-            for the upcoming quarter and year. These predictions will also
-            support product-level demand and replenishment planning.
+            The forecasting pipeline analyzes historical sales patterns and
+            generates seasonal, year-over-year predictions for the upcoming
+            quarter. These predictions also support product-level demand and
+            replenishment planning.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-3">

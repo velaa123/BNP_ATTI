@@ -1,5 +1,7 @@
 import type {
+  ChurnPrediction,
   Customer,
+  CustomerSegmentData,
   DashboardSummary,
   DemandForecast,
   InventoryItem,
@@ -29,6 +31,12 @@ export const api = {
 
   getHighRiskCustomers: (): Promise<Customer[]> =>
     request<Customer[]>('/customers/high-risk'),
+
+  getChurnPredictions: (): Promise<ChurnPrediction[]> =>
+    request<ChurnPrediction[]>('/churn/predictions'),
+
+  getCustomerSegments: (): Promise<CustomerSegmentData[]> =>
+    request<CustomerSegmentData[]>('/churn/segments'),
 
   getSalesData: (): Promise<SalesData[]> =>
     request<SalesData[]>('/sales'),

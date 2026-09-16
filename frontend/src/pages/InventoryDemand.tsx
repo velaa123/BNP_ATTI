@@ -1,8 +1,16 @@
 import KPICard from '../components/dashboard/KPICard'
 import DemandChart from '../components/forecasting/DemandChart'
 import InventoryTable from '../components/inventory/InventoryTable'
+import { api } from '../services/api'
+import { useApi } from '../hooks/useApi'
 
 function InventoryDemand() {
+  const { data: inventory } = useApi(api.getInventory)
+
+  const items = inventory ?? []
+  const totalPredictedDemand = items.reduce((sum, item) => sum + item.predictedDemand, 0)
+  const highPriorityCount = items.filter((item) => item.reorderPriority === 'High').length
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -25,17 +33,17 @@ function InventoryDemand() {
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KPICard
           title="Predicted Demand"
-          value="28.2K"
-          change="+11.6%"
-          description="next quarter"
+          value={items.length > 0 ? `${totalPredictedDemand.toLocaleString('en-IN')} units` : '—'}
+          change={items.length > 0 ? undefined : 'Pending'}
+          description="across all products"
           icon="↗"
           trend="up"
         />
 
         <KPICard
           title="High Priority Products"
-          value="12"
-          change="+8.3%"
+          value={items.length > 0 ? highPriorityCount.toLocaleString('en-IN') : '—'}
+          change={items.length > 0 ? undefined : 'Pending'}
           description="require replenishment focus"
           icon="!"
           trend="up"
@@ -43,8 +51,8 @@ function InventoryDemand() {
 
         <KPICard
           title="Demand Growth"
-          value="+11.6%"
-          change="+3.2%"
+          value="—"
+          change="Pending"
           description="vs previous period"
           icon="↗"
           trend="up"
@@ -52,7 +60,7 @@ function InventoryDemand() {
 
         <KPICard
           title="Forecast Horizon"
-          value="12M"
+          value="3M"
           change="Stable"
           description="demand forecast"
           icon="◷"
@@ -87,8 +95,8 @@ function InventoryDemand() {
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
             Demand forecasts can help identify products that may require
             additional replenishment planning in the upcoming period.
-            Prioritize products with strong predicted demand and increasing
-            demand trends while avoiding unnecessary overstocking.
+            Prioritize products with strong predicted demand while avoiding
+            unnecessary overstocking.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-3">

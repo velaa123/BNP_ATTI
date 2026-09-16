@@ -1,18 +1,21 @@
-interface ProductForecast {
-  rank: number
-  product: string
-  category: string
-  predictedUnits: number
-  growth: number
-}
+import Loading from '../common/Loading'
+import ErrorMessage from '../common/ErrorMessage'
+import { api } from '../../services/api'
+import { useApi } from '../../hooks/useApi'
 
-interface ProductForecastTableProps {
-  products?: ProductForecast[]
-}
+function ProductForecastTable() {
+  const { data, loading, error } = useApi(api.getProductForecast)
 
-function ProductForecastTable({
-  products = [],
-}: ProductForecastTableProps) {
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <ErrorMessage message={error} />
+  }
+
+  const products = data ?? []
+
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl">
       <div className="border-b border-white/10 px-5 py-4">

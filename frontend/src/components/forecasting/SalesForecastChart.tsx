@@ -8,18 +8,24 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import Loading from '../common/Loading'
+import ErrorMessage from '../common/ErrorMessage'
+import { api } from '../../services/api'
+import { useApi } from '../../hooks/useApi'
 
-interface SalesForecastPoint {
-  period: string
-  actual?: number
-  forecast?: number
-}
+function SalesForecastChart() {
+  const { data, loading, error } = useApi(api.getSalesForecast)
 
-interface SalesForecastChartProps {
-  data?: SalesForecastPoint[]
-}
+  if (loading) {
+    return <Loading />
+  }
 
-function SalesForecastChart({ data = [] }: SalesForecastChartProps) {
+  if (error) {
+    return <ErrorMessage message={error} />
+  }
+
+  const chartData = data ?? []
+
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl">
       <div className="mb-6">
@@ -33,14 +39,14 @@ function SalesForecastChart({ data = [] }: SalesForecastChartProps) {
       </div>
 
       <div className="h-72 w-full">
-        {data.length === 0 ? (
+        {chartData.length === 0 ? (
           <div className="flex h-full items-center justify-center text-sm text-slate-500">
             Forecast data will appear here once the model is connected.
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              data={data}
+              data={chartData}
               margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
             >
               <CartesianGrid

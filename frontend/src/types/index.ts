@@ -54,3 +54,21 @@ export interface DashboardSummary {
   revenue: number
   highRiskCustomers: number
 }
+
+export interface ChurnPrediction {
+  customer_id: string
+  churn_probability: number
+  risk_tier: 'low' | 'medium' | 'high' | 'critical'
+  source: 'model' | 'mock'
+}
+
+export interface CustomerSegmentData {
+  customer_id: string
+  customer_segment: string
+  retention_priority: string
+  recommended_action: string
+  needs_immediate_attention: boolean
+  high_value_risk: boolean
+  priority_score: number
+  source: 'model' | 'mock'
+}
