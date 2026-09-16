@@ -1,13 +1,8 @@
 // backend/src/services/mlService.ts
 // Reads churn/segment predictions from the ML team's real CSV output when
 // present; falls back to a heuristic mock (clearly labeled) otherwise.
-// Column names below match the ACTUAL output of Member 2's model —
-// verified against customer-churn-sales-forecasting/ml/outputs/*.csv.
-//
-// Sales/demand/product forecasting and inventory are still mock-derived
-// from real order data, since Member 3's ml-only branch output hasn't
-// been merged/adopted yet. Same CSV-or-mock seam pattern applies there
-// once that data's real path and columns are confirmed with the team.
+// Same CSV-or-mock pattern now applies to sales/demand/product forecasting,
+// reading Member 3's real output from ml/outputs/ when present.
 
 import fs from 'fs';
 import path from 'path';
@@ -22,10 +17,8 @@ import {
   FrontendInventoryItem,
 } from '../models/forecastModel';
 
-// NOTE: path confirmed to differ from the original Stage 5 plan (ml/ at repo
-// root). The ML team's actual structure is customer-churn-sales-forecasting/ml/.
-// Adjust these constants if their outputs/ folder ends up somewhere else —
-// nothing else in this file needs to change.
+// Churn/segments — Member 2's output path (unconfirmed after the ML folder
+// was accidentally deleted and not yet re-added; falls back to mock).
 const CHURN_CSV_PATH = path.resolve(
   __dirname,
   '../../../customer-churn-sales-forecasting/ml/outputs/churn_predictions.csv'
@@ -34,6 +27,11 @@ const SEGMENTS_CSV_PATH = path.resolve(
   __dirname,
   '../../../customer-churn-sales-forecasting/ml/outputs/customer_segments.csv'
 );
+
+// Sales/demand/product forecasting — Member 3's confirmed real output path.
+const SALES_FORECAST_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/sales_forecast.csv');
+const DEMAND_FORECAST_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/demand_forecast.csv');
+const TOP_PRODUCTS_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/top_10_products.csv');
 
 function deriveRiskTier(probability: number): RiskTier {
   if (probability > 0.85) return 'critical';
@@ -47,13 +45,10 @@ function normalizeRiskLevel(raw: string): RiskTier {
   if (lower === 'low' || lower === 'medium' || lower === 'high' || lower === 'critical') {
     return lower;
   }
-  // Unrecognized value from the model — don't silently guess, fall back
-  // to 'medium' so a garbage risk_level never masquerades as a clean tier.
   return 'medium';
 }
 
-// Simple CSV line parser handling quoted fields (model output may quote
-// fields containing commas, e.g. recommended_action text).
+// Simple CSV line parser handling quoted fields.
 function parseCsvLine(line: string): string[] {
   const cells: string[] = [];
   let current = '';
@@ -72,6 +67,8 @@ function parseCsvLine(line: string): string[] {
   cells.push(current);
   return cells.map((c) => c.trim());
 }
+
+// ── Churn predictions ────────────────────────────────────────────────────
 
 function parseChurnCsv(csvContent: string): ChurnPrediction[] {
   const lines = csvContent.trim().split('\n');
@@ -152,8 +149,6 @@ function parseSegmentsCsv(csvContent: string): CustomerSegment[] {
   });
 }
 
-// Mock fallback: simple heuristic from real customer data. NOT a trained
-// model. Used only until churn_predictions.csv exists at the path above.
 async function getMockPredictions(): Promise<ChurnPrediction[]> {
   const result = await pool.query<{
     customer_id: string;
@@ -217,11 +212,6 @@ export async function getCustomerSegments(): Promise<CustomerSegment[]> {
   return getMockSegments();
 }
 
-// Fetches cancellations_count for tiebreaking predictions that share the same
-// churn_probability (common with capped/rounded scores). Works whether
-// predictions came from the mock heuristic or a real model CSV — this data
-// isn't assumed to exist in either source, it's always pulled fresh from
-// customers directly.
 async function getCancellationCounts(): Promise<Map<string, number>> {
   const result = await pool.query<{ customer_id: string; cancellations_count: number }>(
     'SELECT customer_id, cancellations_count FROM customers'
@@ -231,17 +221,13 @@ async function getCancellationCounts(): Promise<Map<string, number>> {
 
 async function sortByRiskWithTiebreak(predictions: ChurnPrediction[]): Promise<ChurnPrediction[]> {
   const cancellations = await getCancellationCounts();
-
   return [...predictions].sort((a, b) => {
     if (b.churn_probability !== a.churn_probability) {
       return b.churn_probability - a.churn_probability;
     }
     const aCancel = cancellations.get(a.customer_id) ?? 0;
     const bCancel = cancellations.get(b.customer_id) ?? 0;
-    if (bCancel !== aCancel) {
-      return bCancel - aCancel;
-    }
-    // final deterministic tiebreak so results are stable across requests
+    if (bCancel !== aCancel) return bCancel - aCancel;
     return a.customer_id.localeCompare(b.customer_id);
   });
 }
@@ -252,9 +238,6 @@ export async function getTopRiskCustomers(limit: number): Promise<ChurnPredictio
   return sorted.slice(0, limit);
 }
 
-// critical maps to 'High' for the frontend, which only supports three
-// tiers — the real 'critical' distinction is preserved on the raw
-// ChurnPrediction/risk_tier field for anything that wants it directly.
 function capitalizeRiskForFrontend(tier: RiskTier): 'Low' | 'Medium' | 'High' {
   if (tier === 'critical') return 'High';
   return (tier.charAt(0).toUpperCase() + tier.slice(1)) as 'Low' | 'Medium' | 'High';
@@ -271,21 +254,66 @@ export async function getHighRiskCustomersForFrontend(limit: number = 10): Promi
 
   return sorted.slice(0, limit).map((pred) => ({
     id: pred.customer_id,
-    name: pred.customer_id, // no real name field in the dataset
+    name: pred.customer_id,
     segment: segmentMap.get(pred.customer_id) ?? 'UNKNOWN',
     churnProbability: pred.churn_probability,
     risk: capitalizeRiskForFrontend(pred.risk_tier),
   }));
 }
 
-// ── Sales / demand / product forecasting + inventory ────────────────────
-// Still mock-derived from real order data — Member 3's ml-only branch
-// output (date-keyed CSVs) has not been adopted yet; same CSV-or-mock
-// seam pattern applies here once that data's path/columns are confirmed.
+// ── Sales / demand / product forecasting ────────────────────────────────
+
+function parseSalesForecastCsv(csvContent: string): { period: string; forecast: number }[] {
+  const lines = csvContent.trim().split('\n');
+  const header = parseCsvLine(lines[0]);
+  const dateIdx = header.indexOf('date');
+  const salesIdx = header.indexOf('predicted_sales');
+
+  if (dateIdx === -1 || salesIdx === -1) {
+    throw new Error(`sales_forecast.csv missing required columns. Found: ${header.join(', ')}`);
+  }
+
+  return lines.slice(1).filter((l) => l.trim().length > 0).map((line) => {
+    const cells = parseCsvLine(line);
+    const period = cells[dateIdx].slice(0, 7); // 'YYYY-MM-DD' -> 'YYYY-MM'
+    return { period, forecast: parseFloat(cells[salesIdx]) };
+  });
+}
+
+function parseDemandForecastCsv(csvContent: string): { period: string; demand: number }[] {
+  const lines = csvContent.trim().split('\n');
+  const header = parseCsvLine(lines[0]);
+  const dateIdx = header.indexOf('date');
+  const demandIdx = header.indexOf('predicted_demand');
+
+  if (dateIdx === -1 || demandIdx === -1) {
+    throw new Error(`demand_forecast.csv missing required columns. Found: ${header.join(', ')}`);
+  }
+
+  return lines.slice(1).filter((l) => l.trim().length > 0).map((line) => {
+    const cells = parseCsvLine(line);
+    const period = cells[dateIdx].slice(0, 7);
+    return { period, demand: Math.round(parseFloat(cells[demandIdx])) };
+  });
+}
+
+function parseTopProductsCsv(csvContent: string): { product_name: string; predicted_sales_2026: number }[] {
+  const lines = csvContent.trim().split('\n');
+  const header = parseCsvLine(lines[0]);
+  const nameIdx = header.indexOf('product_name');
+  const salesIdx = header.indexOf('predicted_sales_2026');
+
+  if (nameIdx === -1 || salesIdx === -1) {
+    throw new Error(`top_10_products.csv missing required columns. Found: ${header.join(', ')}`);
+  }
+
+  return lines.slice(1).filter((l) => l.trim().length > 0).map((line) => {
+    const cells = parseCsvLine(line);
+    return { product_name: cells[nameIdx], predicted_sales_2026: parseFloat(cells[salesIdx]) };
+  });
+}
 
 // Real historical sales, bucketed by month from actual order_date values.
-// NOT a forecast — this is what actually happened, per the caveat that
-// only ~2000 sparse order events exist, not a dense daily sales table.
 export async function getSalesHistory(): Promise<SalesDataPoint[]> {
   const result = await pool.query<{ period: string; sales: number }>(`
     SELECT
@@ -299,19 +327,21 @@ export async function getSalesHistory(): Promise<SalesDataPoint[]> {
   return result.rows.map((r) => ({ period: r.period, sales: parseFloat(r.sales.toString()) }));
 }
 
-// Seasonal baseline: forecast each future month from the same month last
-// year, not a trailing average — avoids distortion from the dataset's
-// sparse final months. Falls back to a trailing-3-month average only if
-// no same-month data exists a year back.
 export async function getSalesForecastForFrontend(): Promise<FrontendSalesForecastPoint[]> {
   const history = await getSalesHistory();
   const points: FrontendSalesForecastPoint[] = history.map((h) => ({ period: h.period, actual: h.sales }));
-  if (history.length === 0) return points;
 
+  if (fs.existsSync(SALES_FORECAST_CSV_PATH)) {
+    const realForecast = parseSalesForecastCsv(fs.readFileSync(SALES_FORECAST_CSV_PATH, 'utf-8'));
+    realForecast.forEach((f) => points.push({ period: f.period, forecast: parseFloat(f.forecast.toFixed(2)) }));
+    return points;
+  }
+
+  // Mock fallback: seasonal year-over-year baseline.
+  if (history.length === 0) return points;
   const historyMap = new Map(history.map((h) => [h.period, h.sales]));
   const lastPeriod = history[history.length - 1].period;
   const [lastYear, lastMonth] = lastPeriod.split('-').map(Number);
-
   const trailing = history.slice(-3);
   const fallbackAvg = trailing.reduce((sum, h) => sum + h.sales, 0) / trailing.length;
 
@@ -320,64 +350,28 @@ export async function getSalesForecastForFrontend(): Promise<FrontendSalesForeca
     const futurePeriod = `${futureDate.getFullYear()}-${String(futureDate.getMonth() + 1).padStart(2, '0')}`;
     const sameMonthLastYear = `${futureDate.getFullYear() - 1}-${String(futureDate.getMonth() + 1).padStart(2, '0')}`;
     const seasonalValue = historyMap.get(sameMonthLastYear);
-
-    points.push({
-      period: futurePeriod,
-      forecast: parseFloat((seasonalValue ?? fallbackAvg).toFixed(2)),
-    });
+    points.push({ period: futurePeriod, forecast: parseFloat((seasonalValue ?? fallbackAvg).toFixed(2)) });
   }
-
   return points;
 }
 
-// Mock top-products-by-predicted-sales: ranks by actual historical revenue
-// as a stand-in for predicted future sales. NOT a trained model.
-export async function getProductForecastForFrontend(limit: number = 10): Promise<FrontendProductForecast[]> {
-  const result = await pool.query<{
-    product_id: string;
-    product_name: string;
-    category: string;
-    total_units: string;
-    total_revenue: number;
-  }>(`
-    SELECT
-      p.product_id,
-      p.product_name,
-      p.category,
-      SUM(o.quantity) AS total_units,
-      SUM(p.unit_price * o.quantity) AS total_revenue
-    FROM orders o
-    JOIN products p ON o.product_id = p.product_id
-    GROUP BY p.product_id, p.product_name, p.category
-    ORDER BY total_revenue DESC
-    LIMIT $1
-  `, [limit]);
-
-  return result.rows.map((row, idx) => ({
-    rank: idx + 1,
-    product: row.product_name,
-    category: row.category,
-    predictedUnits: parseInt(row.total_units, 10),
-    growth: 0, // no historical baseline to compute real growth from — single order per product
-  }));
-}
-
-// Seasonal demand forecast — same year-over-year approach as sales.
 export async function getDemandForecastForFrontend(): Promise<FrontendDemandForecast[]> {
   const result = await pool.query<{ period: string; units: string }>(`
     SELECT TO_CHAR(o.order_date, 'YYYY-MM') AS period, SUM(o.quantity) AS units
-    FROM orders o
-    GROUP BY TO_CHAR(o.order_date, 'YYYY-MM')
-    ORDER BY period
+    FROM orders o GROUP BY TO_CHAR(o.order_date, 'YYYY-MM') ORDER BY period
   `);
-
   const history = result.rows.map((r) => ({ period: r.period, demand: parseInt(r.units, 10) }));
-  if (history.length === 0) return [];
 
+  if (fs.existsSync(DEMAND_FORECAST_CSV_PATH)) {
+    const realForecast = parseDemandForecastCsv(fs.readFileSync(DEMAND_FORECAST_CSV_PATH, 'utf-8'));
+    return [...history, ...realForecast];
+  }
+
+  // Mock fallback: seasonal year-over-year baseline.
+  if (history.length === 0) return [];
   const historyMap = new Map(history.map((h) => [h.period, h.demand]));
   const trailing = history.slice(-3);
   const fallbackAvg = Math.round(trailing.reduce((sum, h) => sum + h.demand, 0) / trailing.length);
-
   const lastPeriod = history[history.length - 1].period;
   const [lastYear, lastMonth] = lastPeriod.split('-').map(Number);
   const forecastPoints: FrontendDemandForecast[] = [];
@@ -387,13 +381,71 @@ export async function getDemandForecastForFrontend(): Promise<FrontendDemandFore
     const futurePeriod = `${futureDate.getFullYear()}-${String(futureDate.getMonth() + 1).padStart(2, '0')}`;
     const sameMonthLastYear = `${futureDate.getFullYear() - 1}-${String(futureDate.getMonth() + 1).padStart(2, '0')}`;
     const seasonalValue = historyMap.get(sameMonthLastYear);
-
     forecastPoints.push({ period: futurePeriod, demand: seasonalValue ?? fallbackAvg });
   }
-
   return [...history, ...forecastPoints];
 }
 
+export async function getProductForecastForFrontend(limit: number = 10): Promise<FrontendProductForecast[]> {
+  if (fs.existsSync(TOP_PRODUCTS_CSV_PATH)) {
+    const topProducts = parseTopProductsCsv(fs.readFileSync(TOP_PRODUCTS_CSV_PATH, 'utf-8'));
+
+    const results: FrontendProductForecast[] = [];
+    for (let i = 0; i < Math.min(topProducts.length, limit); i++) {
+      const tp = topProducts[i];
+
+      // product_name isn't guaranteed unique in this dataset (duplicates like
+      // "Running Shoes" / "RunningShoes" seen before) — this takes the first
+      // match, an approximation worth knowing about, not a hidden assumption.
+      const lookup = await pool.query<{ category: string; total_revenue: string | null }>(`
+        SELECT p.category, SUM(p.unit_price * o.quantity) AS total_revenue
+        FROM products p
+        LEFT JOIN orders o ON o.product_id = p.product_id
+        WHERE p.product_name = $1
+        GROUP BY p.category
+        LIMIT 1
+      `, [tp.product_name]);
+
+      const category = lookup.rows[0]?.category ?? 'Unknown';
+      const historicalRevenue = parseFloat(lookup.rows[0]?.total_revenue ?? '0');
+      const growth = historicalRevenue > 0
+        ? parseFloat((((tp.predicted_sales_2026 - historicalRevenue) / historicalRevenue) * 100).toFixed(1))
+        : 0;
+
+      results.push({
+        rank: i + 1,
+        product: tp.product_name,
+        category,
+        // NOTE: this is a predicted sales VALUE (currency), not a unit count.
+        // top_10_products.csv gives predicted_sales_2026, not unit volume —
+        // flagged to the team, may need a field rename discussion later.
+        predictedUnits: Math.round(tp.predicted_sales_2026),
+        growth,
+      });
+    }
+    return results;
+  }
+
+  // Mock fallback: rank by real historical revenue.
+  const result = await pool.query<{
+    product_id: string; product_name: string; category: string;
+    total_units: string; total_revenue: number;
+  }>(`
+    SELECT p.product_id, p.product_name, p.category, SUM(o.quantity) AS total_units, SUM(p.unit_price * o.quantity) AS total_revenue
+    FROM orders o JOIN products p ON o.product_id = p.product_id
+    GROUP BY p.product_id, p.product_name, p.category ORDER BY total_revenue DESC LIMIT $1
+  `, [limit]);
+
+  return result.rows.map((row, idx) => ({
+    rank: idx + 1,
+    product: row.product_name,
+    category: row.category,
+    predictedUnits: parseInt(row.total_units, 10),
+    growth: 0,
+  }));
+}
+
+// ── Inventory ────────────────────────────────────────────────────────────
 // Reorder priority derived from real demand ranking (top/middle/bottom third
 // of products by total quantity sold) — NOT a fabricated stock comparison,
 // since no stock-tracking data exists in the source dataset.
