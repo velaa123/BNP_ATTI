@@ -10,13 +10,19 @@ function SalesForecast() {
   const { data: demandForecast } = useApi(api.getDemandForecast)
 
   const forecastPoints = (salesForecast ?? []).filter((p) => p.forecast !== undefined)
-  const nextQuarterSales = forecastPoints.reduce((sum, p) => sum + (p.forecast ?? 0), 0)
+  const nextQuarterSalesPoints = forecastPoints.slice(0, 3)
+  const nextQuarterSales = nextQuarterSalesPoints.reduce((sum, p) => sum + (p.forecast ?? 0), 0)
+  const nextYearSales = forecastPoints.reduce((sum, p) => sum + (p.forecast ?? 0), 0)
+  // Real model currently returns a full 12-month forecast — only treat the
+  // "next year" figure as real once there's genuinely a full year of it.
+  const hasFullYearForecast = forecastPoints.length >= 12
 
   const demandPoints = demandForecast ?? []
-  // Forecast points are the ones beyond the real historical data —
-  // same 3-month horizon as sales, taken from the tail of the array.
-  const futureDemand = demandPoints.slice(-3)
-  const nextQuarterDemand = futureDemand.reduce((sum, p) => sum + p.demand, 0)
+  // Forecast points aren't flagged in this endpoint's response — they're
+  // simply whatever comes after real history, which currently means 2026.
+  const futureDemandPoints = demandPoints.filter((p) => p.period.startsWith('2026'))
+  const nextQuarterDemandPoints = futureDemandPoints.slice(0, 3)
+  const nextQuarterDemand = nextQuarterDemandPoints.reduce((sum, p) => sum + p.demand, 0)
 
   return (
     <div className="space-y-6">
@@ -40,8 +46,8 @@ function SalesForecast() {
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <KPICard
           title="Next Quarter Sales"
-          value={forecastPoints.length > 0 ? `₹${nextQuarterSales.toLocaleString('en-IN')}` : '—'}
-          change={forecastPoints.length > 0 ? undefined : 'Pending'}
+          value={nextQuarterSalesPoints.length > 0 ? `₹${nextQuarterSales.toLocaleString('en-IN')}` : '—'}
+          change={nextQuarterSalesPoints.length > 0 ? undefined : 'Pending'}
           description="forecast output"
           icon="↗"
           trend="up"
@@ -49,8 +55,8 @@ function SalesForecast() {
 
         <KPICard
           title="Next Year Sales"
-          value="—"
-          change="Pending"
+          value={hasFullYearForecast ? `₹${nextYearSales.toLocaleString('en-IN')}` : '—'}
+          change={hasFullYearForecast ? undefined : 'Pending'}
           description="annual forecast"
           icon="◷"
           trend="up"
@@ -58,8 +64,8 @@ function SalesForecast() {
 
         <KPICard
           title="Predicted Demand"
-          value={futureDemand.length > 0 ? `${nextQuarterDemand.toLocaleString('en-IN')} units` : '—'}
-          change={futureDemand.length > 0 ? undefined : 'Pending'}
+          value={nextQuarterDemandPoints.length > 0 ? `${nextQuarterDemand.toLocaleString('en-IN')} units` : '—'}
+          change={nextQuarterDemandPoints.length > 0 ? undefined : 'Pending'}
           description="next quarter"
           icon="▥"
           trend="up"
@@ -104,9 +110,9 @@ function SalesForecast() {
 
           <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
             The forecasting pipeline analyzes historical sales patterns and
-            generates seasonal, year-over-year predictions for the upcoming
-            quarter. These predictions also support product-level demand and
-            replenishment planning.
+            generates predictions for the upcoming quarter and year. These
+            predictions also support product-level demand and replenishment
+            planning.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-3">

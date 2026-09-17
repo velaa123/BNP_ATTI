@@ -3,10 +3,15 @@
 // present; falls back to a heuristic mock (clearly labeled) otherwise.
 // Sales/demand/product forecasting reads Member 3's real output from
 // ml/outputs/ when present, same pattern.
+//
+// Expensive reads (CSV parsing, multi-row DB aggregation) are wrapped in
+// a short-TTL in-memory cache — this data only changes when someone edits
+// the database or replaces a CSV file, not between requests in a demo.
 
 import fs from 'fs';
 import path from 'path';
 import { pool } from '../config/database';
+import { withCache } from '../utils/cache';
 import { ChurnPrediction, RiskTier, CustomerSegment } from '../models/churnModel';
 import { FrontendCustomer } from '../models/customerModel';
 import {
@@ -17,14 +22,13 @@ import {
   FrontendInventoryItem,
 } from '../models/forecastModel';
 
-// Churn/segments — real V2 model output path.
 const CHURN_CSV_PATH = path.resolve(__dirname, '../../../churn-data/outputs/churn_predictions.csv');
 const SEGMENTS_CSV_PATH = path.resolve(__dirname, '../../../churn-data/outputs/customer_segments.csv');
-
-// Sales/demand/product forecasting — Member 3's confirmed real output path.
 const SALES_FORECAST_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/sales_forecast.csv');
 const DEMAND_FORECAST_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/demand_forecast.csv');
 const TOP_PRODUCTS_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/top_10_products.csv');
+
+const CACHE_TTL_MS = 60_000; // 1 minute — long enough to help a demo, short enough that a data refresh is noticed quickly
 
 function deriveRiskTier(probability: number): RiskTier {
   if (probability > 0.85) return 'critical';
@@ -61,9 +65,6 @@ function parseCsvLine(line: string): string[] {
 }
 
 // ── Churn predictions ────────────────────────────────────────────────────
-// Real columns: customer_id, churn_probability, risk_score, risk_segment,
-// risk_level, churn_prediction, reason, days_since_purchase, customer_value,
-// total_orders, total_revenue, revenue_at_risk
 
 function parseChurnCsv(csvContent: string): ChurnPrediction[] {
   const lines = csvContent.trim().split('\n');
@@ -106,9 +107,6 @@ function parseChurnCsv(csvContent: string): ChurnPrediction[] {
   });
 }
 
-// Real columns: priority_rank, customer_id, customer_segment,
-// retention_priority, churn_probability, ..., priority_score,
-// recommended_action, needs_immediate_attention, high_value_risk
 function parseSegmentsCsv(csvContent: string): CustomerSegment[] {
   const lines = csvContent.trim().split('\n');
   const header = parseCsvLine(lines[0]);
@@ -200,24 +198,30 @@ async function getMockSegments(): Promise<CustomerSegment[]> {
 }
 
 export async function getChurnPredictions(): Promise<ChurnPrediction[]> {
-  if (fs.existsSync(CHURN_CSV_PATH)) {
-    return parseChurnCsv(fs.readFileSync(CHURN_CSV_PATH, 'utf-8'));
-  }
-  return getMockPredictions();
+  return withCache('churn:predictions', CACHE_TTL_MS, async () => {
+    if (fs.existsSync(CHURN_CSV_PATH)) {
+      return parseChurnCsv(fs.readFileSync(CHURN_CSV_PATH, 'utf-8'));
+    }
+    return getMockPredictions();
+  });
 }
 
 export async function getCustomerSegments(): Promise<CustomerSegment[]> {
-  if (fs.existsSync(SEGMENTS_CSV_PATH)) {
-    return parseSegmentsCsv(fs.readFileSync(SEGMENTS_CSV_PATH, 'utf-8'));
-  }
-  return getMockSegments();
+  return withCache('churn:segments', CACHE_TTL_MS, async () => {
+    if (fs.existsSync(SEGMENTS_CSV_PATH)) {
+      return parseSegmentsCsv(fs.readFileSync(SEGMENTS_CSV_PATH, 'utf-8'));
+    }
+    return getMockSegments();
+  });
 }
 
 async function getCancellationCounts(): Promise<Map<string, number>> {
-  const result = await pool.query<{ customer_id: string; cancellations_count: number }>(
-    'SELECT customer_id, cancellations_count FROM customers'
-  );
-  return new Map(result.rows.map((r) => [r.customer_id, r.cancellations_count]));
+  return withCache('customers:cancellationCounts', CACHE_TTL_MS, async () => {
+    const result = await pool.query<{ customer_id: string; cancellations_count: number }>(
+      'SELECT customer_id, cancellations_count FROM customers'
+    );
+    return new Map(result.rows.map((r) => [r.customer_id, r.cancellations_count]));
+  });
 }
 
 async function sortByRiskWithTiebreak(predictions: ChurnPrediction[]): Promise<ChurnPrediction[]> {
@@ -315,16 +319,18 @@ function parseTopProductsCsv(csvContent: string): { product_name: string; predic
 }
 
 export async function getSalesHistory(): Promise<SalesDataPoint[]> {
-  const result = await pool.query<{ period: string; sales: number }>(`
-    SELECT
-      TO_CHAR(o.order_date, 'YYYY-MM') AS period,
-      SUM(p.unit_price * o.quantity) AS sales
-    FROM orders o
-    JOIN products p ON o.product_id = p.product_id
-    GROUP BY TO_CHAR(o.order_date, 'YYYY-MM')
-    ORDER BY period
-  `);
-  return result.rows.map((r) => ({ period: r.period, sales: parseFloat(r.sales.toString()) }));
+  return withCache('sales:history', CACHE_TTL_MS, async () => {
+    const result = await pool.query<{ period: string; sales: number }>(`
+      SELECT
+        TO_CHAR(o.order_date, 'YYYY-MM') AS period,
+        SUM(p.unit_price * o.quantity) AS sales
+      FROM orders o
+      JOIN products p ON o.product_id = p.product_id
+      GROUP BY TO_CHAR(o.order_date, 'YYYY-MM')
+      ORDER BY period
+    `);
+    return result.rows.map((r) => ({ period: r.period, sales: parseFloat(r.sales.toString()) }));
+  });
 }
 
 export async function getSalesForecastForFrontend(): Promise<FrontendSalesForecastPoint[]> {
@@ -332,7 +338,9 @@ export async function getSalesForecastForFrontend(): Promise<FrontendSalesForeca
   const points: FrontendSalesForecastPoint[] = history.map((h) => ({ period: h.period, actual: h.sales }));
 
   if (fs.existsSync(SALES_FORECAST_CSV_PATH)) {
-    const realForecast = parseSalesForecastCsv(fs.readFileSync(SALES_FORECAST_CSV_PATH, 'utf-8'));
+    const realForecast = await withCache('sales:forecast:csv', CACHE_TTL_MS, async () =>
+      parseSalesForecastCsv(fs.readFileSync(SALES_FORECAST_CSV_PATH, 'utf-8'))
+    );
     realForecast.forEach((f) => points.push({ period: f.period, forecast: parseFloat(f.forecast.toFixed(2)) }));
     return points;
   }
@@ -355,14 +363,18 @@ export async function getSalesForecastForFrontend(): Promise<FrontendSalesForeca
 }
 
 export async function getDemandForecastForFrontend(): Promise<FrontendDemandForecast[]> {
-  const result = await pool.query<{ period: string; units: string }>(`
-    SELECT TO_CHAR(o.order_date, 'YYYY-MM') AS period, SUM(o.quantity) AS units
-    FROM orders o GROUP BY TO_CHAR(o.order_date, 'YYYY-MM') ORDER BY period
-  `);
-  const history = result.rows.map((r) => ({ period: r.period, demand: parseInt(r.units, 10) }));
+  const history = await withCache('demand:history', CACHE_TTL_MS, async () => {
+    const result = await pool.query<{ period: string; units: string }>(`
+      SELECT TO_CHAR(o.order_date, 'YYYY-MM') AS period, SUM(o.quantity) AS units
+      FROM orders o GROUP BY TO_CHAR(o.order_date, 'YYYY-MM') ORDER BY period
+    `);
+    return result.rows.map((r) => ({ period: r.period, demand: parseInt(r.units, 10) }));
+  });
 
   if (fs.existsSync(DEMAND_FORECAST_CSV_PATH)) {
-    const realForecast = parseDemandForecastCsv(fs.readFileSync(DEMAND_FORECAST_CSV_PATH, 'utf-8'));
+    const realForecast = await withCache('demand:forecast:csv', CACHE_TTL_MS, async () =>
+      parseDemandForecastCsv(fs.readFileSync(DEMAND_FORECAST_CSV_PATH, 'utf-8'))
+    );
     return [...history, ...realForecast];
   }
 
@@ -385,86 +397,91 @@ export async function getDemandForecastForFrontend(): Promise<FrontendDemandFore
 }
 
 export async function getProductForecastForFrontend(limit: number = 10): Promise<FrontendProductForecast[]> {
-  if (fs.existsSync(TOP_PRODUCTS_CSV_PATH)) {
-    const topProducts = parseTopProductsCsv(fs.readFileSync(TOP_PRODUCTS_CSV_PATH, 'utf-8'));
+  return withCache(`products:forecast:${limit}`, CACHE_TTL_MS, async () => {
+    if (fs.existsSync(TOP_PRODUCTS_CSV_PATH)) {
+      const topProducts = parseTopProductsCsv(fs.readFileSync(TOP_PRODUCTS_CSV_PATH, 'utf-8'));
 
-    const results: FrontendProductForecast[] = [];
-    for (let i = 0; i < Math.min(topProducts.length, limit); i++) {
-      const tp = topProducts[i];
+      const results: FrontendProductForecast[] = [];
+      for (let i = 0; i < Math.min(topProducts.length, limit); i++) {
+        const tp = topProducts[i];
 
-      const lookup = await pool.query<{ category: string; total_revenue: string | null }>(`
-        SELECT p.category, SUM(p.unit_price * o.quantity) AS total_revenue
-        FROM products p
-        LEFT JOIN orders o ON o.product_id = p.product_id
-        WHERE p.product_name = $1
-        GROUP BY p.category
-        LIMIT 1
-      `, [tp.product_name]);
+        const lookup = await pool.query<{ category: string; total_revenue: string | null }>(`
+          SELECT p.category, SUM(p.unit_price * o.quantity) AS total_revenue
+          FROM products p
+          LEFT JOIN orders o ON o.product_id = p.product_id
+          WHERE p.product_name = $1
+          GROUP BY p.category
+          LIMIT 1
+        `, [tp.product_name]);
 
-      const category = lookup.rows[0]?.category ?? 'Unknown';
-      const historicalRevenue = parseFloat(lookup.rows[0]?.total_revenue ?? '0');
-      const growth = historicalRevenue > 0
-        ? parseFloat((((tp.predicted_sales_2026 - historicalRevenue) / historicalRevenue) * 100).toFixed(1))
-        : 0;
+        const category = lookup.rows[0]?.category ?? 'Unknown';
+        const historicalRevenue = parseFloat(lookup.rows[0]?.total_revenue ?? '0');
+        const growth = historicalRevenue > 0
+          ? parseFloat((((tp.predicted_sales_2026 - historicalRevenue) / historicalRevenue) * 100).toFixed(1))
+          : 0;
 
-      results.push({
-        rank: i + 1,
-        product: tp.product_name,
-        category,
-        predictedUnits: Math.round(tp.predicted_sales_2026),
-        growth,
-      });
+        results.push({
+          rank: i + 1,
+          product: tp.product_name,
+          category,
+          predictedUnits: Math.round(tp.predicted_sales_2026),
+          growth,
+        });
+      }
+      return results;
     }
-    return results;
-  }
 
-  const result = await pool.query<{
-    product_id: string; product_name: string; category: string;
-    total_units: string; total_revenue: number;
-  }>(`
-    SELECT p.product_id, p.product_name, p.category, SUM(o.quantity) AS total_units, SUM(p.unit_price * o.quantity) AS total_revenue
-    FROM orders o JOIN products p ON o.product_id = p.product_id
-    GROUP BY p.product_id, p.product_name, p.category ORDER BY total_revenue DESC LIMIT $1
-  `, [limit]);
+    const result = await pool.query<{
+      product_id: string; product_name: string; category: string;
+      total_units: string; total_revenue: number;
+    }>(`
+      SELECT p.product_id, p.product_name, p.category, SUM(o.quantity) AS total_units, SUM(p.unit_price * o.quantity) AS total_revenue
+      FROM orders o JOIN products p ON o.product_id = p.product_id
+      GROUP BY p.product_id, p.product_name, p.category ORDER BY total_revenue DESC LIMIT $1
+    `, [limit]);
 
-  return result.rows.map((row, idx) => ({
-    rank: idx + 1,
-    product: row.product_name,
-    category: row.category,
-    predictedUnits: parseInt(row.total_units, 10),
-    growth: 0,
-  }));
+    return result.rows.map((row, idx) => ({
+      rank: idx + 1,
+      product: row.product_name,
+      category: row.category,
+      predictedUnits: parseInt(row.total_units, 10),
+      growth: 0,
+    }));
+  });
 }
 
 // ── Inventory ────────────────────────────────────────────────────────────
+
 export async function getInventoryForFrontend(): Promise<FrontendInventoryItem[]> {
-  const result = await pool.query<{
-    product_name: string;
-    category: string;
-    total_units: string;
-  }>(`
-    SELECT p.product_name, p.category, SUM(o.quantity) AS total_units
-    FROM orders o
-    JOIN products p ON o.product_id = p.product_id
-    GROUP BY p.product_id, p.product_name, p.category
-    ORDER BY total_units DESC
-  `);
+  return withCache('inventory', CACHE_TTL_MS, async () => {
+    const result = await pool.query<{
+      product_name: string;
+      category: string;
+      total_units: string;
+    }>(`
+      SELECT p.product_name, p.category, SUM(o.quantity) AS total_units
+      FROM orders o
+      JOIN products p ON o.product_id = p.product_id
+      GROUP BY p.product_id, p.product_name, p.category
+      ORDER BY total_units DESC
+    `);
 
-  const items = result.rows.map((row) => ({
-    product: row.product_name,
-    category: row.category,
-    predictedDemand: parseInt(row.total_units, 10),
-  }));
+    const items = result.rows.map((row) => ({
+      product: row.product_name,
+      category: row.category,
+      predictedDemand: parseInt(row.total_units, 10),
+    }));
 
-  const total = items.length;
-  const topThird = Math.ceil(total / 3);
-  const middleThird = Math.ceil((total * 2) / 3);
+    const total = items.length;
+    const topThird = Math.ceil(total / 3);
+    const middleThird = Math.ceil((total * 2) / 3);
 
-  return items.map((item, idx) => ({
-    ...item,
-    reorderPriority: (idx < topThird ? 'High' : idx < middleThird ? 'Medium' : 'Low') as
-      | 'Low'
-      | 'Medium'
-      | 'High',
-  }));
+    return items.map((item, idx) => ({
+      ...item,
+      reorderPriority: (idx < topThird ? 'High' : idx < middleThird ? 'Medium' : 'Low') as
+        | 'Low'
+        | 'Medium'
+        | 'High',
+    }));
+  });
 }
