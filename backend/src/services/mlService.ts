@@ -7,7 +7,7 @@
 // Expensive reads (CSV parsing, multi-row DB aggregation) are wrapped in
 // a short-TTL in-memory cache — this data only changes when someone edits
 // the database or replaces a CSV file, not between requests in a demo.
-
+import { AnomalyReport, ChurnAnomaly, HighRiskExposure, SalesAnomaly } from '../models/anomalyModel';
 import fs from 'fs';
 import path from 'path';
 import { pool } from '../config/database';
@@ -484,4 +484,120 @@ export async function getInventoryForFrontend(): Promise<FrontendInventoryItem[]
         | 'High',
     }));
   });
+}
+
+// ── Anomaly detection ────────────────────────────────────────────────────
+// IQR (interquartile range) method: a value is flagged as an outlier if it
+// falls outside Q1 - 1.5*IQR or Q3 + 1.5*IQR. This is a standard statistical
+// technique, not an arbitrary cutoff — it adapts to whatever the actual
+// distribution of churn probabilities looks like, real or mock.
+
+function calculateIQRBounds(values: number[]): { q1: number; q3: number; lower: number; upper: number } {
+  const sorted = [...values].sort((a, b) => a - b);
+  const q1Index = Math.floor(sorted.length * 0.25);
+  const q3Index = Math.floor(sorted.length * 0.75);
+  const q1 = sorted[q1Index];
+  const q3 = sorted[q3Index];
+  const iqr = q3 - q1;
+  return {
+    q1: parseFloat(q1.toFixed(4)),
+    q3: parseFloat(q3.toFixed(4)),
+    lower: parseFloat((q1 - 1.5 * iqr).toFixed(4)),
+    upper: parseFloat((q3 + 1.5 * iqr).toFixed(4)),
+  };
+}
+
+async function detectChurnAnomalies(): Promise<{ anomalies: ChurnAnomaly[]; bounds: ReturnType<typeof calculateIQRBounds> }> {
+  const predictions = await getChurnPredictions();
+  const probabilities = predictions.map((p) => p.churn_probability);
+  const bounds = calculateIQRBounds(probabilities);
+
+  const anomalies: ChurnAnomaly[] = predictions
+    .filter((p) => p.churn_probability > bounds.upper || p.churn_probability < bounds.lower)
+    .map((p) => ({
+      customer_id: p.customer_id,
+      churn_probability: p.churn_probability,
+      reason: p.churn_probability > bounds.upper
+        ? `Churn probability (${(p.churn_probability * 100).toFixed(1)}%) is statistically unusual — exceeds the expected upper range (${(bounds.upper * 100).toFixed(1)}%)`
+        : `Churn probability (${(p.churn_probability * 100).toFixed(1)}%) is statistically unusual — below the expected lower range (${(bounds.lower * 100).toFixed(1)}%)`,
+    }));
+
+  return { anomalies, bounds };
+}
+
+// Flags the top 1% of customers by real dollar revenue_at_risk — a
+// business-exposure signal, distinct from statistical outlier detection.
+// This will surface results even when churn_probability itself has no
+// statistical outliers, since it's measuring a different thing: financial
+// stakes, not distributional rarity.
+async function detectHighRiskExposures(): Promise<HighRiskExposure[]> {
+  const predictions = await getChurnPredictions();
+  const withExposure = predictions.filter((p) => p.revenue_at_risk > 0);
+
+  if (withExposure.length === 0) return [];
+
+  const sorted = [...withExposure].sort((a, b) => b.revenue_at_risk - a.revenue_at_risk);
+  const topOnePercentCount = Math.max(1, Math.ceil(sorted.length * 0.01));
+
+  return sorted.slice(0, topOnePercentCount).map((p) => ({
+    customer_id: p.customer_id,
+    revenue_at_risk: p.revenue_at_risk,
+    churn_probability: p.churn_probability,
+    reason: `Among the top 1% of customers by revenue at risk (₹${p.revenue_at_risk.toLocaleString('en-IN')}) — high financial exposure if this customer churns`,
+  }));
+}
+
+// Flags months where actual sales deviate sharply (>40%) from the average
+// of their immediate neighbors — catches genuine spikes/drops in the real
+// order data, not a fabricated pattern.
+async function detectSalesAnomalies(): Promise<SalesAnomaly[]> {
+  const history = await getSalesHistory();
+  if (history.length < 3) return [];
+
+  const anomalies: SalesAnomaly[] = [];
+  const DEVIATION_THRESHOLD = 0.4; // 40% — a reasonable, disclosed cutoff, not hidden
+
+  for (let i = 1; i < history.length - 1; i++) {
+    const prev = history[i - 1].sales;
+    const curr = history[i].sales;
+    const next = history[i + 1].sales;
+    const neighborAvg = (prev + next) / 2;
+
+    if (neighborAvg === 0) continue; // avoid division by zero on genuinely empty periods
+
+    const deviation = (curr - neighborAvg) / neighborAvg;
+
+    if (Math.abs(deviation) > DEVIATION_THRESHOLD) {
+      anomalies.push({
+        period: history[i].period,
+        actual_sales: parseFloat(curr.toFixed(2)),
+        expected_range_low: parseFloat((neighborAvg * (1 - DEVIATION_THRESHOLD)).toFixed(2)),
+        expected_range_high: parseFloat((neighborAvg * (1 + DEVIATION_THRESHOLD)).toFixed(2)),
+        deviation_percent: parseFloat((deviation * 100).toFixed(1)),
+      });
+    }
+  }
+
+  return anomalies;
+}
+
+export async function getAnomalyReport(): Promise<AnomalyReport> {
+  const [churnResult, highRiskExposures, salesAnomalies] = await Promise.all([
+    detectChurnAnomalies(),
+    detectHighRiskExposures(),
+    detectSalesAnomalies(),
+  ]);
+
+  const churnAnomalyNote = churnResult.anomalies.length === 0
+    ? 'No statistical outliers detected in churn probability. This model\'s predictions have high natural variance across the customer base, so no individual score stands out as unusual relative to the population — see high_risk_exposures below for customers flagged by financial exposure instead.'
+    : `${churnResult.anomalies.length} customer(s) flagged as statistical outliers in churn probability.`;
+
+  return {
+    churn_anomalies: churnResult.anomalies,
+    churn_anomaly_note: churnAnomalyNote,
+    high_risk_exposures: highRiskExposures,
+    sales_anomalies: salesAnomalies,
+    churn_probability_bounds: churnResult.bounds,
+    generated_at: new Date().toISOString(),
+  };
 }

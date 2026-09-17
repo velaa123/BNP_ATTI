@@ -1,7 +1,4 @@
 // backend/src/app.ts
-// Express app assembly: middleware, route mounting, error handling.
-// Does NOT call .listen() — see server.ts for that.
-
 import express, { Application } from 'express';
 import cors from 'cors';
 import { env } from './config/env';
@@ -14,6 +11,7 @@ import dashboardRoutes from './routes/dashboardRoutes';
 import salesRoutes from './routes/salesRoutes';
 import demandRoutes from './routes/demandRoutes';
 import inventoryRoutes from './routes/inventoryRoutes';
+import anomalyRoutes from './routes/anomalyRoutes';
 
 const app: Application = express();
 
@@ -32,9 +30,8 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/demand', demandRoutes);
 app.use('/api/inventory', inventoryRoutes);
+app.use('/api/anomalies', anomalyRoutes);
 
-// Error handler must be registered LAST — after all routes,
-// so it catches errors from anything above it.
 app.use(errorHandler);
 
 export default app;
