@@ -1,11 +1,10 @@
-
 """
-Customer Churn Project - Tuned Model with Threshold Optimization
+Customer Churn Project - V2 Tuned Model with Threshold Optimization
 
 Purpose:
-    Train and tune a Random Forest churn prediction model,
-    optimize the classification probability threshold using
-    out-of-fold validation predictions, and evaluate the
+    Train and tune a Random Forest churn prediction model using
+    Feature Engineering V2, optimize the classification threshold
+    using out-of-fold validation predictions, and evaluate the
     final model on an untouched test set.
 
 Input:
@@ -78,10 +77,11 @@ MODEL_FILE = MODEL_DIR / "churn_model.pkl"
 
 
 # ============================================================
-# MODEL FEATURES
+# V2 MODEL FEATURES
 # ============================================================
 
 MODEL_FEATURES = [
+    # Original behavioral features
     "age",
     "total_orders",
     "total_quantity",
@@ -92,6 +92,7 @@ MODEL_FEATURES = [
     "total_cancellations",
     "average_purchase_frequency",
     "max_purchase_frequency",
+    "min_purchase_frequency",
     "tenure_days",
     "orders_per_month",
     "average_quantity_per_order",
@@ -103,6 +104,25 @@ MODEL_FEATURES = [
     "revenue_per_unit",
     "purchase_activity_ratio",
     "customer_value",
+
+    # Feature Engineering V2
+    "revenue_per_month",
+    "quantity_per_month",
+    "cancellation_per_order",
+    "rating_adjusted_value",
+    "frequency_consistency",
+    "purchase_intensity",
+    "revenue_intensity",
+    "quantity_intensity",
+    "customer_value_per_month",
+    "tenure_years",
+    "orders_per_tenure_year",
+    "revenue_per_order_month",
+    "revenue_x_frequency",
+    "orders_x_purchase_activity",
+    "value_x_purchase_activity",
+    "cancellation_x_frequency",
+    "diversity_ratio",
 ]
 
 
@@ -186,7 +206,7 @@ def find_best_threshold(
     probabilities: np.ndarray,
 ) -> tuple[float, pd.DataFrame]:
     """
-    Find the probability threshold that maximizes F1.
+    Find probability threshold that maximizes F1.
 
     Threshold selection is performed only on out-of-fold
     predictions from the training data.
@@ -254,7 +274,7 @@ def find_best_threshold(
     ].copy()
 
     # If multiple thresholds have the same F1,
-    # choose the one with better recall.
+    # prefer better recall, then precision.
     candidates = candidates.sort_values(
         by=[
             "recall",
@@ -283,14 +303,14 @@ def main() -> None:
 
     print_header(
         "CUSTOMER CHURN PROJECT - "
-        "THRESHOLD OPTIMIZED MODEL TRAINING"
+        "V2 THRESHOLD OPTIMIZED MODEL TRAINING"
     )
 
     # ========================================================
     # 1. LOAD DATASET
     # ========================================================
 
-    print("\n[1/10] Loading churn dataset...")
+    print("\n[1/10] Loading V2 churn dataset...")
     print(f"Input file: {INPUT_FILE}")
 
     if not INPUT_FILE.exists():
@@ -321,12 +341,12 @@ def main() -> None:
     # 2. VALIDATE
     # ========================================================
 
-    print("\n[2/10] Validating training data...")
+    print("\n[2/10] Validating V2 training data...")
 
     validate_dataset(df)
 
     print(
-        "All required training columns are available."
+        "All required V2 training columns are available."
     )
 
     print("Target column is valid.")
@@ -335,7 +355,7 @@ def main() -> None:
     # 3. PREPARE FEATURES
     # ========================================================
 
-    print("\n[3/10] Preparing model features...")
+    print("\n[3/10] Preparing V2 model features...")
 
     X, y = prepare_features(
         df
@@ -346,7 +366,7 @@ def main() -> None:
         f"{len(MODEL_FEATURES)}"
     )
 
-    print("\nFeatures used by model:")
+    print("\nFeatures used by V2 model:")
 
     for feature in MODEL_FEATURES:
         print(f"  - {feature}")
@@ -436,7 +456,7 @@ def main() -> None:
     # ========================================================
 
     print(
-        "\n[6/10] Running Random Forest "
+        "\n[6/10] Running V2 Random Forest "
         "hyperparameter tuning..."
     )
 
@@ -562,18 +582,6 @@ def main() -> None:
         "training probabilities..."
     )
 
-    # --------------------------------------------------------
-    # Important:
-    #
-    # cross_val_predict generates predictions for each
-    # training sample using a model that did NOT train on
-    # that sample.
-    #
-    # Therefore these probabilities can safely be used
-    # to select a classification threshold without touching
-    # the final test set.
-    # --------------------------------------------------------
-
     threshold_cv = StratifiedKFold(
         n_splits=5,
         shuffle=True,
@@ -644,12 +652,9 @@ def main() -> None:
     # ========================================================
 
     print(
-        "\n[8/10] Evaluating final model "
+        "\n[8/10] Evaluating V2 final model "
         "on untouched test set..."
     )
-
-    # best_model was already refit by GridSearchCV
-    # on the complete training set.
 
     test_probabilities = (
         best_model.predict_proba(
@@ -697,7 +702,7 @@ def main() -> None:
 
     print("\n")
     print("-" * 70)
-    print("FINAL MODEL PERFORMANCE")
+    print("V2 FINAL MODEL PERFORMANCE")
     print("-" * 70)
 
     print(
@@ -776,12 +781,8 @@ def main() -> None:
     # ========================================================
 
     print(
-        "\n[9/10] Analyzing model behavior..."
+        "\n[9/10] Analyzing V2 model behavior..."
     )
-
-    # --------------------------------------------------------
-    # Training performance
-    # --------------------------------------------------------
 
     train_probabilities = (
         best_model.predict_proba(
@@ -866,9 +867,7 @@ def main() -> None:
     )
 
     print("\nFeature importance:")
-
-    print("\n")
-
+    print()
     print("-" * 60)
 
     print(
@@ -892,7 +891,7 @@ def main() -> None:
     # ========================================================
 
     print(
-        "\n[10/10] Saving final model..."
+        "\n[10/10] Saving V2 final model..."
     )
 
     MODEL_DIR.mkdir(
@@ -941,6 +940,12 @@ def main() -> None:
             "are labeled as churned."
         ),
 
+        "feature_engineering_version": "V2",
+
+        "number_of_features": len(
+            MODEL_FEATURES
+        ),
+
         "threshold_optimization": {
             "method": (
                 "5-fold out-of-fold "
@@ -968,7 +973,7 @@ def main() -> None:
     except Exception as error:
 
         print(
-            "\nERROR: Failed to save model."
+            "\nERROR: Failed to save V2 model."
         )
 
         print(
@@ -978,7 +983,7 @@ def main() -> None:
         sys.exit(1)
 
     print(
-        "Final model saved successfully:"
+        "V2 final model saved successfully:"
     )
 
     print(MODEL_FILE)
@@ -988,15 +993,19 @@ def main() -> None:
     # ========================================================
 
     print("\n")
-
     print("=" * 70)
 
     print(
-        "THRESHOLD OPTIMIZED MODEL "
+        "V2 THRESHOLD OPTIMIZED MODEL "
         "TRAINING COMPLETE"
     )
 
     print("=" * 70)
+
+    print(
+        f"Features         : "
+        f"{len(MODEL_FEATURES)}"
+    )
 
     print(
         f"CV ROC-AUC       : "
@@ -1036,12 +1045,27 @@ def main() -> None:
     print("\nModel ready.")
 
     print(
-        "\nIMPORTANT:"
+        "\nThe saved model package contains:"
     )
 
     print(
-        "The prediction script must use "
-        "the saved optimal threshold."
+        "  - trained V2 Random Forest"
+    )
+
+    print(
+        "  - 39 model features"
+    )
+
+    print(
+        "  - optimized probability threshold"
+    )
+
+    print(
+        "  - CV ROC-AUC"
+    )
+
+    print(
+        "  - untouched test metrics"
     )
 
     print(
@@ -1049,8 +1073,7 @@ def main() -> None:
     )
 
     print(
-        "Update ml\\churn\\predict.py to "
-        "use the optimized threshold."
+        "Run: python churn\\predict.py"
     )
 
     print("=" * 70)
