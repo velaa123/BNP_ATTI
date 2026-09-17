@@ -1,8 +1,8 @@
 // backend/src/services/mlService.ts
 // Reads churn/segment predictions from the ML team's real CSV output when
 // present; falls back to a heuristic mock (clearly labeled) otherwise.
-// Same CSV-or-mock pattern now applies to sales/demand/product forecasting,
-// reading Member 3's real output from ml/outputs/ when present.
+// Sales/demand/product forecasting reads Member 3's real output from
+// ml/outputs/ when present, same pattern.
 
 import fs from 'fs';
 import path from 'path';
@@ -17,16 +17,9 @@ import {
   FrontendInventoryItem,
 } from '../models/forecastModel';
 
-// Churn/segments — Member 2's output path (unconfirmed after the ML folder
-// was accidentally deleted and not yet re-added; falls back to mock).
-const CHURN_CSV_PATH = path.resolve(
-  __dirname,
-  '../../../customer-churn-sales-forecasting/ml/outputs/churn_predictions.csv'
-);
-const SEGMENTS_CSV_PATH = path.resolve(
-  __dirname,
-  '../../../customer-churn-sales-forecasting/ml/outputs/customer_segments.csv'
-);
+// Churn/segments — real V2 model output path.
+const CHURN_CSV_PATH = path.resolve(__dirname, '../../../churn-data/outputs/churn_predictions.csv');
+const SEGMENTS_CSV_PATH = path.resolve(__dirname, '../../../churn-data/outputs/customer_segments.csv');
 
 // Sales/demand/product forecasting — Member 3's confirmed real output path.
 const SALES_FORECAST_CSV_PATH = path.resolve(__dirname, '../../../ml/outputs/sales_forecast.csv');
@@ -48,7 +41,6 @@ function normalizeRiskLevel(raw: string): RiskTier {
   return 'medium';
 }
 
-// Simple CSV line parser handling quoted fields.
 function parseCsvLine(line: string): string[] {
   const cells: string[] = [];
   let current = '';
@@ -69,6 +61,9 @@ function parseCsvLine(line: string): string[] {
 }
 
 // ── Churn predictions ────────────────────────────────────────────────────
+// Real columns: customer_id, churn_probability, risk_score, risk_segment,
+// risk_level, churn_prediction, reason, days_since_purchase, customer_value,
+// total_orders, total_revenue, revenue_at_risk
 
 function parseChurnCsv(csvContent: string): ChurnPrediction[] {
   const lines = csvContent.trim().split('\n');
@@ -77,14 +72,16 @@ function parseChurnCsv(csvContent: string): ChurnPrediction[] {
   const idx = {
     customer_id: header.indexOf('customer_id'),
     churn_probability: header.indexOf('churn_probability'),
-    risk_level: header.indexOf('risk_level'),
-    revenue_at_risk: header.indexOf('revenue_at_risk'),
+    risk_segment: header.indexOf('risk_segment'),
+    reason: header.indexOf('reason'),
+    days_since_purchase: header.indexOf('days_since_purchase'),
     customer_value: header.indexOf('customer_value'),
     total_orders: header.indexOf('total_orders'),
     total_revenue: header.indexOf('total_revenue'),
+    revenue_at_risk: header.indexOf('revenue_at_risk'),
   };
 
-  const required = ['customer_id', 'churn_probability', 'risk_level'] as const;
+  const required = ['customer_id', 'churn_probability', 'risk_segment'] as const;
   const missing = required.filter((key) => idx[key] === -1);
   if (missing.length > 0) {
     throw new Error(
@@ -94,20 +91,24 @@ function parseChurnCsv(csvContent: string): ChurnPrediction[] {
 
   return lines.slice(1).filter((l) => l.trim().length > 0).map((line) => {
     const cells = parseCsvLine(line);
-    const probability = parseFloat(cells[idx.churn_probability]);
     return {
       customer_id: cells[idx.customer_id],
-      churn_probability: probability,
-      risk_tier: normalizeRiskLevel(cells[idx.risk_level]),
+      churn_probability: parseFloat(cells[idx.churn_probability]),
+      risk_tier: normalizeRiskLevel(cells[idx.risk_segment]),
       revenue_at_risk: parseFloat(cells[idx.revenue_at_risk] ?? '0'),
       customer_value: parseFloat(cells[idx.customer_value] ?? '0'),
       total_orders: parseInt(cells[idx.total_orders] ?? '0', 10),
       total_revenue: parseFloat(cells[idx.total_revenue] ?? '0'),
+      reason: idx.reason !== -1 ? cells[idx.reason] : undefined,
+      days_since_purchase: idx.days_since_purchase !== -1 ? parseInt(cells[idx.days_since_purchase], 10) : undefined,
       source: 'model' as const,
     };
   });
 }
 
+// Real columns: priority_rank, customer_id, customer_segment,
+// retention_priority, churn_probability, ..., priority_score,
+// recommended_action, needs_immediate_attention, high_value_risk
 function parseSegmentsCsv(csvContent: string): CustomerSegment[] {
   const lines = csvContent.trim().split('\n');
   const header = parseCsvLine(lines[0]);
@@ -275,7 +276,7 @@ function parseSalesForecastCsv(csvContent: string): { period: string; forecast: 
 
   return lines.slice(1).filter((l) => l.trim().length > 0).map((line) => {
     const cells = parseCsvLine(line);
-    const period = cells[dateIdx].slice(0, 7); // 'YYYY-MM-DD' -> 'YYYY-MM'
+    const period = cells[dateIdx].slice(0, 7);
     return { period, forecast: parseFloat(cells[salesIdx]) };
   });
 }
@@ -313,7 +314,6 @@ function parseTopProductsCsv(csvContent: string): { product_name: string; predic
   });
 }
 
-// Real historical sales, bucketed by month from actual order_date values.
 export async function getSalesHistory(): Promise<SalesDataPoint[]> {
   const result = await pool.query<{ period: string; sales: number }>(`
     SELECT
@@ -337,7 +337,6 @@ export async function getSalesForecastForFrontend(): Promise<FrontendSalesForeca
     return points;
   }
 
-  // Mock fallback: seasonal year-over-year baseline.
   if (history.length === 0) return points;
   const historyMap = new Map(history.map((h) => [h.period, h.sales]));
   const lastPeriod = history[history.length - 1].period;
@@ -367,7 +366,6 @@ export async function getDemandForecastForFrontend(): Promise<FrontendDemandFore
     return [...history, ...realForecast];
   }
 
-  // Mock fallback: seasonal year-over-year baseline.
   if (history.length === 0) return [];
   const historyMap = new Map(history.map((h) => [h.period, h.demand]));
   const trailing = history.slice(-3);
@@ -394,9 +392,6 @@ export async function getProductForecastForFrontend(limit: number = 10): Promise
     for (let i = 0; i < Math.min(topProducts.length, limit); i++) {
       const tp = topProducts[i];
 
-      // product_name isn't guaranteed unique in this dataset (duplicates like
-      // "Running Shoes" / "RunningShoes" seen before) — this takes the first
-      // match, an approximation worth knowing about, not a hidden assumption.
       const lookup = await pool.query<{ category: string; total_revenue: string | null }>(`
         SELECT p.category, SUM(p.unit_price * o.quantity) AS total_revenue
         FROM products p
@@ -416,9 +411,6 @@ export async function getProductForecastForFrontend(limit: number = 10): Promise
         rank: i + 1,
         product: tp.product_name,
         category,
-        // NOTE: this is a predicted sales VALUE (currency), not a unit count.
-        // top_10_products.csv gives predicted_sales_2026, not unit volume —
-        // flagged to the team, may need a field rename discussion later.
         predictedUnits: Math.round(tp.predicted_sales_2026),
         growth,
       });
@@ -426,7 +418,6 @@ export async function getProductForecastForFrontend(limit: number = 10): Promise
     return results;
   }
 
-  // Mock fallback: rank by real historical revenue.
   const result = await pool.query<{
     product_id: string; product_name: string; category: string;
     total_units: string; total_revenue: number;
@@ -446,9 +437,6 @@ export async function getProductForecastForFrontend(limit: number = 10): Promise
 }
 
 // ── Inventory ────────────────────────────────────────────────────────────
-// Reorder priority derived from real demand ranking (top/middle/bottom third
-// of products by total quantity sold) — NOT a fabricated stock comparison,
-// since no stock-tracking data exists in the source dataset.
 export async function getInventoryForFrontend(): Promise<FrontendInventoryItem[]> {
   const result = await pool.query<{
     product_name: string;
